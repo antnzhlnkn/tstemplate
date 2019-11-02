@@ -18,6 +18,19 @@ class AddTodo extends Component<IProps,IState> {
         todo: '',
     };
 
+    private addTodo() {
+        this.props.firestore.add(
+            { collection: 'todos' },
+            {
+                uid: this.props.uid,
+                name: this.state.todo,
+                isDone : this.props.isDone,
+                date: this.props.date
+            }
+        )
+        this.setState({ todo: '' })
+    }
+
     render() {
         if (!this.props.uid) return null;
 
@@ -31,18 +44,6 @@ class AddTodo extends Component<IProps,IState> {
                 <button onClick={() => this.addTodo()}>Add Todo</button>
             </div>
         )
-    }
-    private addTodo() {
-        this.props.firestore.add(
-            { collection: 'todos' },
-            {
-                uid: this.props.uid,
-                name: this.state.todo,
-                isDone : this.props.isDone,
-                date: this.props.date
-            }
-        )
-        this.setState({ todo: '' })
     }
 }
 

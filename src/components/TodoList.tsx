@@ -44,22 +44,6 @@ class TodoList extends Component<IProps,any> {
             </div>
         )
     }
-    render() {
-        const todoItems = this.props.todos.map(
-            (item) => this.renderTodo(item)
-        )
-        return (
-            <div>
-                <div>
-                    {todoItems}
-                </div>
-                {this.props.completedTodo ? <button onClick={()=>this.saveTodos()}>Save</button> : null}
-                <AddTodo />
-                {console.log(this.props.completedTodo)}
-                {this.props.completedTodo ? console.log(this.props.completedTodo.id) : null}
-            </div>
-        )
-    }
     saveTodos() {
         this.props.firestore.collection('todos')
             .doc(this.props.completedTodo.id)
@@ -88,6 +72,23 @@ class TodoList extends Component<IProps,any> {
                     uid: todo.uid
                 }
             );
+    }
+
+    render() {
+        const todoItems = this.props.todos.map(
+            (item) => this.renderTodo(item)
+        )
+        return (
+            <div>
+                <div>
+                    {todoItems}
+                </div>
+                {this.props.completedTodo ? <button onClick={()=>this.saveTodos()}>Save</button> : null}
+                <AddTodo />
+                {console.log(this.props.completedTodo)}
+                {this.props.completedTodo ? console.log(this.props.completedTodo.id) : null}
+            </div>
+        )
     }
 }
 const mapStateToProps = state => {
