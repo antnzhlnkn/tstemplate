@@ -12,7 +12,7 @@ interface IProps {
 interface IState {
     todo: string
 }
-export class AddTodo extends Component<IProps,IState> {
+class AddTodo extends Component<IProps,IState> {
 
     public state: IState = {
         todo: '',
@@ -58,7 +58,7 @@ const mapStateToProps = (state: any)=> {
 const mapDispatchToProps = {
 };
 
-export default compose(
+export default compose<any>(
     connect(mapStateToProps, mapDispatchToProps),
     firestoreConnect(),
 )(AddTodo)

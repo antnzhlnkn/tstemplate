@@ -3,7 +3,7 @@ import {connect} from 'react-redux'
 import {compose} from 'redux'
 import {firestoreConnect} from 'react-redux-firebase'
 import moment from 'moment';
-import { AddTodo } from "./AddTodo";
+import AddTodo from "./AddTodo";
 
 interface IProps {
     uid?: string,
@@ -124,9 +124,9 @@ const mapDispatchToProps = (dispatch: any) => {
     }
 }
 
-export default compose(
+export default compose<any>(
     connect(mapStateToProps, mapDispatchToProps),
-    firestoreConnect((props) => {
+    firestoreConnect((props:any) => {
         const {uid } : any = props;
         if (!uid) return []
             return [

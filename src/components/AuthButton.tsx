@@ -41,7 +41,7 @@ const mapStateToProps = (state: any) => ({
 const mapDispatchToProps = {
 };
 
-export default compose(
+export default compose<any>(
     connect(mapStateToProps, mapDispatchToProps),
     firebaseConnect()
 )(AuthButton)

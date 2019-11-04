@@ -7,15 +7,14 @@
     "@types/node": "12.11.1",
     "@types/react": "^16.9.9",
     "@types/react-dom": "16.9.2",
-    "firebase": "latest",
+    "firebase": "^7.2.3",
     "moment": "latest",
     "react": "^16.10.2",
     "react-dom": "^16.10.2",
-    "react-redux": "latest",
-    "react-redux-firebase": "latest",
+    "react-redux": "^5.1.2",
     "react-scripts": "3.2.0",
-    "redux": "latest",
-    "redux-firestore": "latest",
+    "redux": "^4.0.4",
+    "redux-firestore": "^0.9.0",
     "tslint": "^5.20.0",
     "tslint-react": "^4.1.0",
     "typescript": "3.6.4"
@@ -42,6 +41,7 @@
     ]
   },
   "devDependencies": {
-    "@types/react-redux": "^7.1.5"
+    "@types/react-redux": "^7.1.5",
+    "react-redux-firebase": "^2.4.1"
   }
 }
