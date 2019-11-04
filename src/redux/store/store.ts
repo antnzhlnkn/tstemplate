@@ -11,7 +11,7 @@ import firebaseConfig from '../../firebase/firebaseConfig'
 import {initialState, rootReducer} from '../reducers'
 
 firebase.initializeApp(firebaseConfig);
-firebase.firestore().settings({ timestampsInSnapshots: true });
+firebase.firestore().settings({});
 
 let enhancers: any[];
 

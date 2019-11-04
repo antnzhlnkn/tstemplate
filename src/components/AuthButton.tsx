@@ -26,11 +26,15 @@ export class AuthButton extends Component<IProps,any> {
                 </div>
             )
         }
-        return <button
+        return (
+            <div>
+            <button
             style={{width: "20rem"}}
             onClick={() => this.props.firebase.logout()}
         > Logout</button>
-
+                {console.log(this.state)}
+            </div>
+        )
     }
 }
 

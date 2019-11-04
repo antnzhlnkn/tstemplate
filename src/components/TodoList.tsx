@@ -102,6 +102,7 @@ class TodoList extends Component<IProps,any> {
                 </div>
                 {completedTodo ? <button onClick={()=>this.saveTodos()}>Save</button> : null}
                 <AddTodo />
+                {console.log(this.props)}
                 {console.log(completedTodo)}
                 {completedTodo ? console.log(completedTodo.id) : null}
             </div>

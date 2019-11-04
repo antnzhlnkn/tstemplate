@@ -3,6 +3,7 @@ import { Provider } from "react-redux"
 
 import store from "./redux/store/store"
 import  AuthButton from "./components/AuthButton"
+import TodoList from "./components/TodoList";
 
 
 class App extends Component <any, any>  {
@@ -11,6 +12,7 @@ class App extends Component <any, any>  {
         <Provider store={store}>
           <div>
             <AuthButton />
+            <TodoList />
           </div>
         </Provider>
     )
