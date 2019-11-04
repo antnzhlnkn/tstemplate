@@ -2,6 +2,8 @@ import React, {Component} from 'react'
 import { connect } from 'react-redux'
 import { compose } from 'redux'
 import {firebaseConnect, isEmpty, isLoaded} from 'react-redux-firebase'
+import Button from '@material-ui/core/Button';
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 interface IProps {
     auth?:object,
@@ -10,28 +12,33 @@ interface IProps {
 }
 
 export class AuthButton extends Component<IProps,any> {
+
     render() {
         if (!isLoaded(this.props.auth)) {
-            return <span>...Loading</span>
+            return (
+                <span>
+                    <CircularProgress color="secondary"/>
+                </span>
+            )
         }
         if (isEmpty(this.props.auth)) {
             return (
                 <div>
-                    <button
+                    <Button variant="outlined"
                         onClick={
                             () => this.props.firebase.login({provider: 'google', type: 'popup'})
                         }
                     >Log in with Google
-                    </button>
+                    </Button>
                 </div>
             )
         }
         return (
             <div>
-            <button
+            <Button variant="outlined"
             style={{width: "20rem"}}
             onClick={() => this.props.firebase.logout()}
-        > Logout</button>
+        > Logout</Button>
                 {console.log(this.state)}
             </div>
         )

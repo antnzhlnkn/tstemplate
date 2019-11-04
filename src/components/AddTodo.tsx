@@ -2,6 +2,10 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { compose } from 'redux'
 import { firestoreConnect } from 'react-redux-firebase'
+import Button from '@material-ui/core/Button';
+import Input from '@material-ui/core/Input';
+import Fab from '@material-ui/core/Fab';
+import AddIcon from '@material-ui/icons/Add';
 
 interface IProps {
     uid?: string,
@@ -36,12 +40,16 @@ class AddTodo extends Component<IProps,IState> {
 
         return (
             <div>
-                <input
+                <Input
                     type="text"
                     value={this.state.todo}
                     onChange={(evt) => this.setState({ todo: evt.target.value })}
                 />
-                <button onClick={() => this.addTodo()}>Add Todo</button>
+                <Button onClick={() => this.addTodo()}>
+                    <Fab color="primary" aria-label="add">
+                        <AddIcon />
+                    </Fab>
+                </Button>
             </div>
         )
     }

@@ -4,6 +4,9 @@ import {compose} from 'redux'
 import {firestoreConnect} from 'react-redux-firebase'
 import moment from 'moment';
 import AddTodo from "./AddTodo";
+import Button from '@material-ui/core/Button';
+import Checkbox from '@material-ui/core/Checkbox';
+import Card from '@material-ui/core/Card';
 
 interface IProps {
     uid?: string,
@@ -27,33 +30,42 @@ interface RefreshTodosParams {
     todo: any;
 }
 
+interface Styles {
+    padding: any,
+    cursor: any,
+    backgroundColor: any
+}
+
 class TodoList extends Component<IProps,any> {
 
     renderTodo({todo}: RenderTodoParams) {
-        let styles = {
+        const styles : Styles = {
             padding: '1rem',
             cursor: 'pointer',
-            backgroundColor: '#988afe'
+            backgroundColor:'#ffffff'
         }
         if (todo === this.props.selectedTodo) {
             styles.backgroundColor = '#988afe'
         }
         return (
-            <div
+            <Card
                 key={todo.name}
                 style={styles}
                 onClick={() => this.props.selectTodo(todo)}>
                 {todo.name}
-                <input
-                    type="checkbox"
+                <Checkbox
                     checked={todo.isDone}
                     onChange={() => this.props.completTodo(todo)}
                 />
+                <div>
                 {todo.date ? <span>Hours: {((moment.duration(moment().unix() * 1000).asHours()) - moment.duration(todo.date.seconds * 1000).asHours()).toFixed(1)}  </span> : null}
                 {todo.date ? <span>Days: {((moment.duration(moment().unix() * 1000).asDays()) - moment.duration(todo.date.seconds * 1000).asDays()).toFixed()} </span> : null}
-                <button onClick={()=>this.refreshTodos({todo: todo})}>refresh</button>
-                <div><button onClick={()=>this.delTodos({todo: todo})}>delete</button></div>
-            </div>
+                </div>
+                <div>
+                    <Button onClick={()=>this.refreshTodos({todo: todo})}>refresh</Button>
+                    <Button onClick={()=>this.delTodos({todo: todo})}>delete</Button>
+                </div>
+            </Card>
         )
     }
     saveTodos() {
@@ -100,7 +112,7 @@ class TodoList extends Component<IProps,any> {
                 <div>
                     {todoItems}
                 </div>
-                {completedTodo ? <button onClick={()=>this.saveTodos()}>Save</button> : null}
+                {completedTodo ? <Button onClick={()=>this.saveTodos()}>Save</Button> : null}
                 <AddTodo />
                 {console.log(this.props)}
                 {console.log(completedTodo)}
