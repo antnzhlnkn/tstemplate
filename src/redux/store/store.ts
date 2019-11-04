@@ -1,6 +1,6 @@
-import { createStore, compose } from 'redux'
-import { reactReduxFirebase } from 'react-redux-firebase'
-import { reduxFirestore } from 'redux-firestore'
+import {compose, createStore} from 'redux'
+import {reactReduxFirebase} from 'react-redux-firebase'
+import {reduxFirestore} from 'redux-firestore'
 
 
 import firebase from 'firebase/app'
@@ -8,27 +8,30 @@ import 'firebase/auth'
 import 'firebase/firestore'
 
 import firebaseConfig from '../../firebase/firebaseConfig'
-import { initialState, rootReducer } from '../reducers'
+import {initialState, rootReducer} from '../reducers'
 
 firebase.initializeApp(firebaseConfig);
 firebase.firestore().settings({ timestampsInSnapshots: true });
 
-const enhancers = [
+let enhancers: any[];
+
+enhancers = [
     reduxFirestore(firebase),
     reactReduxFirebase(firebase, {
         userProfile: 'users',
         useFirestoreForProfile: true,
     })
 ];
-const reduxDevToolsExtension = window.devToolsExtension;
+const {devToolsExtension} :any= window;
+const reduxDevToolsExtension = devToolsExtension;
 if (
     process.env.NODE_ENV === "development" &&
     typeof reduxDevToolsExtension === "function"
 ) {
     enhancers.push(reduxDevToolsExtension())
 }
-
-const composedEnhancers = compose(
+let composedEnhancers: any;
+composedEnhancers = compose(
     ...enhancers
 );
 

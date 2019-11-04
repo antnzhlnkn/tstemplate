@@ -1,14 +1,15 @@
 import React, {Component} from 'react'
-import {connect} from 'react-redux'
-import {compose} from 'redux'
+import { connect } from 'react-redux'
+import { compose } from 'redux'
 import {firebaseConnect, isEmpty, isLoaded} from 'react-redux-firebase'
 
 interface IProps {
     auth?:object,
-    firestore?: any
+    firestore?: any,
+    firebase?:any
 }
 
-class AuthButton extends Component<IProps> {
+export class AuthButton extends Component<IProps,any> {
     render() {
         if (!isLoaded(this.props.auth)) {
             return <span>...Loading</span>
@@ -33,9 +34,9 @@ class AuthButton extends Component<IProps> {
     }
 }
 
-const mapStateToProps = state => {
-    return { auth: state.firebase.auth }
-};
+const mapStateToProps = (state: any) => ({
+    auth: state.firebase.auth
+});
 
 const mapDispatchToProps = {
 };

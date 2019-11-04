@@ -1,10 +1,9 @@
-import React, { Component } from 'react'
-import { connect } from 'react-redux'
-import { compose } from 'redux'
-import { firestoreConnect } from 'react-redux-firebase'
-import * as moment from 'moment';
-
-import AddTodo from './AddTodo'
+import React, {Component} from 'react'
+import {connect} from 'react-redux'
+import {compose} from 'redux'
+import {firestoreConnect} from 'react-redux-firebase'
+import moment from 'moment';
+import { AddTodo } from "./AddTodo";
 
 interface IProps {
     uid?: string,
@@ -16,12 +15,25 @@ interface IProps {
     firestore?: object
 }
 
+interface RenderTodoParams {
+    todo: any;
+}
+
+interface DelTodosParams {
+    todo: any;
+}
+
+interface RefreshTodosParams {
+    todo: any;
+}
+
 class TodoList extends Component<IProps,any> {
 
-    renderTodo(todo) {
-        const styles = {
+    renderTodo({todo}: RenderTodoParams) {
+        let styles = {
             padding: '1rem',
-            cursor: 'pointer'
+            cursor: 'pointer',
+            backgroundColor: '#988afe'
         }
         if (todo === this.props.selectedTodo) {
             styles.backgroundColor = '#988afe'
@@ -37,32 +49,36 @@ class TodoList extends Component<IProps,any> {
                     checked={todo.isDone}
                     onChange={() => this.props.completTodo(todo)}
                 />
-                {todo.date ? <span>Hours: {((moment.duration(moment().unix()*1000).asHours())-moment.duration(todo.date.seconds*1000).asHours()).toFixed(1)}  </span> : null}
-                {todo.date ? <span>Days: {((moment.duration(moment().unix()*1000).asDays())-moment.duration(todo.date.seconds*1000).asDays()).toFixed()} </span> : null}
-                <button onClick={()=>this.refreshTodos(todo)}>refresh</button>
-                <div><button onClick={()=>this.delTodos(todo)}>delete</button></div>
+                {todo.date ? <span>Hours: {((moment.duration(moment().unix() * 1000).asHours()) - moment.duration(todo.date.seconds * 1000).asHours()).toFixed(1)}  </span> : null}
+                {todo.date ? <span>Days: {((moment.duration(moment().unix() * 1000).asDays()) - moment.duration(todo.date.seconds * 1000).asDays()).toFixed()} </span> : null}
+                <button onClick={()=>this.refreshTodos({todo: todo})}>refresh</button>
+                <div><button onClick={()=>this.delTodos({todo: todo})}>delete</button></div>
             </div>
         )
     }
     saveTodos() {
-        this.props.firestore.collection('todos')
-            .doc(this.props.completedTodo.id)
+        const {collection} : any = this.props.firestore
+        const {uid, date, id, name, isDone} :any = this.props.completedTodo;
+        collection('todos')
+            .doc(id)
             .set(
                 {
-                    name: this.props.completedTodo.name,
-                    isDone: this.props.completedTodo.isDone,
-                    uid: this.props.completedTodo.uid,
-                    date: this.props.completedTodo.date ? this.props.completedTodo.date : new Date()
+                    name: name,
+                    isDone: isDone,
+                    uid: uid,
+                    date: date ? date : new Date()
                 }
             );
     }
-    delTodos(todo) {
-        this.props.firestore.collection('todos')
+    delTodos({todo}: DelTodosParams) {
+        const {collection} :any = this.props.firestore;
+        collection('todos')
             .doc(todo.id)
             .delete()
     }
-    refreshTodos(todo) {
-        this.props.firestore.collection('todos')
+    refreshTodos({todo}: RefreshTodosParams) {
+        const {collection} :any = this.props.firestore;
+        collection('todos')
             .doc(todo.id)
             .set(
                 {
@@ -75,23 +91,24 @@ class TodoList extends Component<IProps,any> {
     }
 
     render() {
-        const todoItems = this.props.todos.map(
-            (item) => this.renderTodo(item)
-        )
+        const {completedTodo, todos} : any= this.props;
+        const todoItems = todos.map(
+            (item: any) => this.renderTodo({todo: item})
+        );
         return (
             <div>
                 <div>
                     {todoItems}
                 </div>
-                {this.props.completedTodo ? <button onClick={()=>this.saveTodos()}>Save</button> : null}
+                {completedTodo ? <button onClick={()=>this.saveTodos()}>Save</button> : null}
                 <AddTodo />
-                {console.log(this.props.completedTodo)}
-                {this.props.completedTodo ? console.log(this.props.completedTodo.id) : null}
+                {console.log(completedTodo)}
+                {completedTodo ? console.log(completedTodo.id) : null}
             </div>
         )
     }
 }
-const mapStateToProps = state => {
+const mapStateToProps = (state: any) => {
     return {
         uid: state.firebase.auth.uid,
         todos: state.firestore.ordered.todos ? state.firestore.ordered.todos : [],
@@ -100,22 +117,23 @@ const mapStateToProps = state => {
     }
 }
 
-const mapDispatchToProps = dispatch => {
+const mapDispatchToProps = (dispatch: any) => {
     return {
-        selectTodo: todo => dispatch({ type: 'selectTodo', todo }),
-        completTodo: todo => dispatch ({ type: 'completTodo', todo})
+        selectTodo: (todo : any) => dispatch({ type: 'selectTodo', todo }),
+        completTodo: (todo : any) => dispatch ({ type: 'completTodo', todo})
     }
 }
 
 export default compose(
     connect(mapStateToProps, mapDispatchToProps),
     firestoreConnect((props) => {
-            if (!props.uid) return []
+        const {uid } : any = props;
+        if (!uid) return []
             return [
                 {
                     collection: 'todos',
                     where: [
-                        ['uid', '==', props.uid]
+                        ['uid', '==', uid]
                     ]
                 }
             ]

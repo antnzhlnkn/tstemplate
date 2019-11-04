@@ -7,12 +7,12 @@ interface IProps {
     uid?: string,
     isDone?: boolean,
     date?: any,
-    firestore?: object
+    firestore?: any
 }
 interface IState {
     todo: string
 }
-class AddTodo extends Component<IProps,IState> {
+export class AddTodo extends Component<IProps,IState> {
 
     public state: IState = {
         todo: '',
@@ -47,7 +47,7 @@ class AddTodo extends Component<IProps,IState> {
     }
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = (state: any)=> {
     return {
         uid: state.firebase.auth.uid,
         isDone: false,
@@ -55,7 +55,8 @@ const mapStateToProps = state => {
     }
 }
 
-const mapDispatchToProps = {}
+const mapDispatchToProps = {
+};
 
 export default compose(
     connect(mapStateToProps, mapDispatchToProps),

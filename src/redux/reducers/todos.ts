@@ -3,7 +3,7 @@ export const initialState = {
     completedTodo:null
 };
 
-export function reducer(state = initialState, action) {
+export function reducer(state = initialState, action: any) {
     if (action.type === "selectTodo") {
         return { ...state, selectedTodo: action.todo }
     }
