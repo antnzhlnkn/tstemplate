@@ -40,11 +40,11 @@ class AddTodo extends Component<IProps,IState> {
                 isDone : this.props.isDone,
                 date: this.state.date
             }
-        )
+        );
         this.setState({ todo: '' })
     }
     private handleDateChange = (date: Date | null) => {
-        this.setState({date: date})
+        this.setState({date: date});
         console.log(this.state.date)
     };
 
@@ -93,7 +93,7 @@ const mapStateToProps = (state: any)=> {
         isDone: false,
         date: new Date()
     }
-}
+};
 
 const mapDispatchToProps = {
 };

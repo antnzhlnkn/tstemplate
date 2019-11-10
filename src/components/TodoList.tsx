@@ -48,7 +48,7 @@ class TodoList extends Component<IProps,any> {
             padding: '1rem',
             cursor: 'pointer',
             backgroundColor:'#ffffff'
-        }
+        };
         if (todo === this.props.selectedTodo) {
             styles.backgroundColor = '#988afe'
         }
@@ -77,7 +77,7 @@ class TodoList extends Component<IProps,any> {
         )
     }
     saveTodos({todo}: SaveTodosParams) {
-        const {collection} : any = this.props.firestore
+        const {collection} : any = this.props.firestore;
         const {uid, date, id, name, isDone} :any = todo;
         collection('todos')
             .doc(id)
@@ -135,20 +135,20 @@ const mapStateToProps = (state: any) => {
         selectedTodo: state.todos.selectedTodo,
         completedTodo :state.todos.completedTodo
     }
-}
+};
 
 const mapDispatchToProps = (dispatch: any) => {
     return {
         selectTodo: (todo : any) => dispatch({ type: 'selectTodo', todo }),
         completTodo: (todo : any) => dispatch ({ type: 'completTodo', todo})
     }
-}
+};
 
 export default compose<any>(
     connect(mapStateToProps, mapDispatchToProps),
     firestoreConnect((props:any) => {
         const {uid } : any = props;
-        if (!uid) return []
+        if (!uid) return [];
             return [
                 {
                     collection: 'todos',

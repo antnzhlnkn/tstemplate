@@ -5,10 +5,10 @@ import { reducer as todosReducer, initialState as todosInitial } from './todos'
 
 export const initialState = {
     todos: todosInitial
-}
+};
 
 export const rootReducer = combineReducers({
     firebase: firebaseReducer,
     firestore: firestoreReducer,
     todos: todosReducer
-})
+});
