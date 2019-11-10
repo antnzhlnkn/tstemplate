@@ -9,7 +9,7 @@ import AddIcon from '@material-ui/icons/Add';
 import DateFnsUtils from '@date-io/date-fns';
 import {
     MuiPickersUtilsProvider,
-    KeyboardDatePicker,
+    KeyboardDateTimePicker,
 } from '@material-ui/pickers';
 import Card from '@material-ui/core/Card';
 import {Box} from "@material-ui/core";
@@ -56,13 +56,17 @@ class AddTodo extends Component<IProps,IState> {
                 <Card>
                 <Box display="flex" flexDirection="column" m={1}>
                     <Input
+                        required={true}
+                        placeholder="Enter new task"
                         type="text"
                         value={this.state.todo}
                         onChange={(evt) => this.setState({ todo: evt.target.value })}
                   />
                 <MuiPickersUtilsProvider utils={DateFnsUtils}>
-                        <KeyboardDatePicker
-                            format="dd/MM/yyyy"
+                        <KeyboardDateTimePicker
+                            variant="inline"
+                            ampm={false}
+                            format="dd/MM/yyyy HH:mm"
                             margin="normal"
                             id="date-picker-inline"
                             value={this.state.date}
