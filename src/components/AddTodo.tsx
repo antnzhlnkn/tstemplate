@@ -64,7 +64,6 @@ class AddTodo extends Component<IProps,IState> {
                   />
                 <MuiPickersUtilsProvider utils={DateFnsUtils}>
                         <KeyboardDateTimePicker
-                            variant="inline"
                             ampm={false}
                             format="dd/MM/yyyy HH:mm"
                             margin="normal"

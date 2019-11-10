@@ -19,6 +19,10 @@ interface IProps {
     firestore?: object
 }
 
+interface SaveTodosParams {
+    todo: object;
+}
+
 interface RenderTodoParams {
     todo: any;
 }
@@ -66,14 +70,15 @@ class TodoList extends Component<IProps,any> {
                 <div>
                     <Button onClick={()=>this.refreshTodos({todo: todo})}>refresh</Button>
                     <Button onClick={()=>this.delTodos({todo: todo})}>delete</Button>
+                    <Button onClick={()=> this.saveTodos({todo: todo})}>save</Button>
                 </div>
             </Card>
             </Box>
         )
     }
-    saveTodos() {
+    saveTodos({todo}: SaveTodosParams) {
         const {collection} : any = this.props.firestore
-        const {uid, date, id, name, isDone} :any = this.props.completedTodo;
+        const {uid, date, id, name, isDone} :any = todo;
         collection('todos')
             .doc(id)
             .set(
@@ -115,7 +120,6 @@ class TodoList extends Component<IProps,any> {
                 <div>
                     {todoItems}
                 </div>
-                {completedTodo ? <Button onClick={()=>this.saveTodos()}>Save</Button> : null}
                 <AddTodo />
                 {console.log(this.props)}
                 {console.log(completedTodo)}
