@@ -48,10 +48,10 @@ export class Header extends Component<IProps,any> {
         return (
             <div>
                 <Router>
-                    <Button><Link to='/'>Home</Link></Button>
-                    <Button><Link to='/profile'>Profile</Link></Button>
-                    <Route exact path='/' component={TodoList} />
-                    <Route path='/profile' component={Profile} />
+                    <Button><Link to='/tstemplate'>Home</Link></Button>
+                    <Button><Link to='/tstemplate/profile'>Profile</Link></Button>
+                    <Route exact path='/tstemplate' component={TodoList} />
+                    <Route path='/tstemplate/profile' component={Profile} />
                 </Router>
             </div>
         )
