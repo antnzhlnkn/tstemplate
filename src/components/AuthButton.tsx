@@ -36,7 +36,7 @@ export class AuthButton extends Component<IProps,any> {
         return (
             <div>
             <Button variant="outlined"
-            style={{width: "20rem"}}
+            style={{width: "100%"}}
             onClick={() => this.props.firebase.logout()}
         > Logout</Button>
                 {console.log(this.state)}
