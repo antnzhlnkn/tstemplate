@@ -13,7 +13,7 @@ interface IProps {
     firebase?:any,
 }
 
-export class AuthButton extends Component<IProps,any> {
+export class Profile extends Component<IProps,any> {
 
     private CheckProfile = () => {
         console.log(this.props.auth)
@@ -86,4 +86,4 @@ const mapDispatchToProps = {
 export default compose<any>(
     connect(mapStateToProps, mapDispatchToProps),
     firebaseConnect()
-)(AuthButton)
+)(Profile)
