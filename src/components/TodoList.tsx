@@ -9,6 +9,7 @@ import Checkbox from '@material-ui/core/Checkbox';
 import Card from '@material-ui/core/Card';
 import {Box} from "@material-ui/core";
 import FormControlLabel from '@material-ui/core/FormControlLabel';
+import TodoItem from "./TodoItem";
 import CircularProgress from "./AuthButton";
 
 interface IProps {
@@ -128,20 +129,15 @@ class TodoList extends Component<IProps,any> {
     }
 
     render() {
+        const {todos} : any= this.props;
+        const todoItems = todos.map((item:any) => <TodoItem key={item.id} index={item.id} item={item}/>)
 
-        const {completedTodo, todos} : any= this.props;
-        const todoItems = todos.map(
-            (item: any) => this.renderTodo({todo: item})
-        );
         return (
             <div>
                 <div>
                     {todoItems}
                 </div>
                 <AddTodo />
-                {console.log(this.props)}
-                {console.log(completedTodo)}
-                {completedTodo ? console.log(completedTodo.id) : null}
             </div>
         )
     }
