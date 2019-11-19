@@ -20,6 +20,7 @@ import MenuIcon from '@material-ui/icons/Menu';
 import {Grid} from "@material-ui/core";
 import TodoList from "./TodoList";
 import Profile from "./Profile";
+import OtherTodo from "./OtherTodo"
 import Card from "@material-ui/core/Card";
 
 interface IProps {
@@ -49,8 +50,10 @@ export class Header extends Component<IProps,any> {
             <div>
                 <Router>
                     <Button><Link to='/tstemplate'>Home</Link></Button>
+                    <Button><Link to='/tstemplate/other'>Other</Link></Button>
                     <Button><Link to='/tstemplate/profile'>Profile</Link></Button>
                     <Route exact path='/tstemplate' component={TodoList} />
+                    <Route path='/tstemplate/other' component={OtherTodo} />
                     <Route path='/tstemplate/profile' component={Profile} />
                 </Router>
             </div>

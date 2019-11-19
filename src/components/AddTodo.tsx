@@ -13,6 +13,8 @@ import {
 } from '@material-ui/pickers';
 import Card from '@material-ui/core/Card';
 import {Box} from "@material-ui/core";
+import Checkbox from '@material-ui/core/Checkbox';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
 
 interface IProps {
     uid?: string,
@@ -22,12 +24,16 @@ interface IProps {
 }
 interface IState {
     todo: string,
+    isprivate:boolean,
+    isDone:boolean,
     date? : any
 }
 class AddTodo extends Component<IProps,IState> {
 
     public state: IState = {
         todo: '',
+        isprivate: false,
+        isDone:false,
         date: new Date()
     };
 
@@ -37,7 +43,8 @@ class AddTodo extends Component<IProps,IState> {
             {
                 uid: this.props.uid,
                 name: this.state.todo,
-                isDone : this.props.isDone,
+                isDone : this.state.isDone,
+                isprivate : this.state.isprivate,
                 date: this.state.date
             }
         );
@@ -75,6 +82,16 @@ class AddTodo extends Component<IProps,IState> {
                             }}
                         />
                 </MuiPickersUtilsProvider>
+                <FormControlLabel
+                     control={
+                          <Checkbox
+                               checked={this.state.isprivate}
+                               onChange={(evt) => this.setState({ isprivate: evt.target.checked })}
+                               value="isprivate"
+                          />
+                     }
+                     label="Task is private"
+                />
                 <Button onClick={() => this.addTodo()}>
                     <Fab color="primary" aria-label="add">
                         <AddIcon />
@@ -89,9 +106,7 @@ class AddTodo extends Component<IProps,IState> {
 
 const mapStateToProps = (state: any)=> {
     return {
-        uid: state.firebase.auth.uid,
-        isDone: false,
-        date: new Date()
+        uid: state.firebase.auth.uid
     }
 };
 
