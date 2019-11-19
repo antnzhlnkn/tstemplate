@@ -1,13 +1,15 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {compose} from 'redux'
-import {firestoreConnect} from 'react-redux-firebase'
+import {firestoreConnect, isLoaded} from 'react-redux-firebase'
 import moment from 'moment';
 import AddTodo from "./AddTodo";
 import Button from '@material-ui/core/Button';
 import Checkbox from '@material-ui/core/Checkbox';
 import Card from '@material-ui/core/Card';
 import {Box} from "@material-ui/core";
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import CircularProgress from "./AuthButton";
 
 interface IProps {
     uid?: string,
@@ -16,6 +18,8 @@ interface IProps {
     selectTodo?: any,
     completedTodo?: object,
     completTodo?: any,
+    ptivatedTodo?: object,
+    privateTodo?: any,
     firestore?: object
 }
 
@@ -43,6 +47,7 @@ interface Styles {
 
 class TodoList extends Component<IProps,any> {
 
+
     renderTodo({todo}: RenderTodoParams) {
         const styles : Styles = {
             padding: '1rem',
@@ -67,6 +72,16 @@ class TodoList extends Component<IProps,any> {
                 {todo.date ? <span>Hours: {((moment.duration(moment().unix() * 1000).asHours()) - moment.duration(todo.date.seconds * 1000).asHours()).toFixed(1)}  </span> : null}
                 {todo.date ? <span>Days: {((moment.duration(moment().unix() * 1000).asDays()) - moment.duration(todo.date.seconds * 1000).asDays()).toFixed()} </span> : null}
                 </div>
+                <FormControlLabel
+                    control={
+                        <Checkbox
+                            checked={todo.isprivate}
+                            onChange={() => this.props.privateTodo(todo)}
+                            value="isprivate"
+                        />
+                    }
+                    label="Task is private"
+                />
                 <div>
                     <Button onClick={()=>this.refreshTodos({todo: todo})}>refresh</Button>
                     <Button onClick={()=>this.delTodos({todo: todo})}>delete</Button>
@@ -78,7 +93,7 @@ class TodoList extends Component<IProps,any> {
     }
     saveTodos({todo}: SaveTodosParams) {
         const {collection} : any = this.props.firestore;
-        const {uid, date, id, name, isDone} :any = todo;
+        const {uid, date, id, name, isDone , isprivate} :any = todo;
         collection('todos')
             .doc(id)
             .set(
@@ -86,6 +101,7 @@ class TodoList extends Component<IProps,any> {
                     name: name,
                     isDone: isDone,
                     uid: uid,
+                    isprivate: isprivate,
                     date: date ? date : new Date()
                 }
             );
@@ -105,12 +121,14 @@ class TodoList extends Component<IProps,any> {
                     date: new Date(),
                     name: todo.name,
                     isDone: todo.isDone,
-                    uid: todo.uid
+                    uid: todo.uid,
+                    isprivate: todo.isprivate
                 }
             );
     }
 
     render() {
+
         const {completedTodo, todos} : any= this.props;
         const todoItems = todos.map(
             (item: any) => this.renderTodo({todo: item})
@@ -133,14 +151,16 @@ const mapStateToProps = (state: any) => {
         uid: state.firebase.auth.uid,
         todos: state.firestore.ordered.todos ? state.firestore.ordered.todos : [],
         selectedTodo: state.todos.selectedTodo,
-        completedTodo :state.todos.completedTodo
+        completedTodo :state.todos.completedTodo,
+        privatedTodo :state.todos.privatedTodo
     }
 };
 
 const mapDispatchToProps = (dispatch: any) => {
     return {
         selectTodo: (todo : any) => dispatch({ type: 'selectTodo', todo }),
-        completTodo: (todo : any) => dispatch ({ type: 'completTodo', todo})
+        completTodo: (todo : any) => dispatch ({ type: 'completTodo', todo}),
+        privateTodo: (todo : any) => dispatch({ type: 'privateTodo', todo }),
     }
 };
 
