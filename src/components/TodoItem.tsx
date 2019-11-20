@@ -31,7 +31,7 @@ class TodoItem extends Component<IIodoItemProps, IIodoItemState> {
     }
 
     private handleChange = (event: any) => {
-        const {name, value} = event.target;
+        const {value} = event.target;
         this.setState({name: value})
     }
 
