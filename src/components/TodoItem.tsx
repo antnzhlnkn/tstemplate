@@ -27,9 +27,9 @@ class TodoItem extends Component<IIodoItemProps, IIodoItemState> {
         super(props);
         this.state = {
             name: props.item.name,
-            isDone: false,
+            isDone: props.item.isDone,
             isEdit: false,
-            isPrivate: false,
+            isPrivate: props.item.isprivate,
             date: props.item.date
         };
     }
@@ -40,8 +40,8 @@ class TodoItem extends Component<IIodoItemProps, IIodoItemState> {
     };
 
     private handleCheck = (event: any) => {
-        const {name, checked} = event.target;
-        this.setState({name: checked})
+        const {checked} = event.target;
+        this.setState({isDone: checked})
     };
 
     private handleEdit = () => {
@@ -75,13 +75,10 @@ class TodoItem extends Component<IIodoItemProps, IIodoItemState> {
                         }
                         <Checkbox
                             disabled={!this.state.isEdit}
+                            name="isDone"
+                            checked={this.state.isDone}
+                            onChange={this.handleCheck}
                         >
-                            <input
-                                type="checkbox"
-                                name="isDone"
-                                checked={this.state.isDone}
-                                onChange={this.handleCheck}
-                            />
                         </Checkbox>
                         <div>
                             {this.state.date ?
