@@ -12,7 +12,7 @@ interface IIodoItemProps {
     item: any;
 }
 
-interface IIodoItemState{
+interface IIodoItemState {
     isEdit: boolean;
     name: string;
     isDone: boolean;
@@ -54,13 +54,21 @@ class TodoItem extends Component<IIodoItemProps, IIodoItemState> {
             <div>
                 <Card>
                     <CardContent>
-                        <Input
-                            type="text"
-                            placeholder="add what ToDo"
-                            value={this.state.name}
-                            name="name"
-                            onChange={this.handleChange}
-                        />
+                        {
+                            this.state.isEdit ? (
+                                    <Input
+                                        type="text"
+                                        placeholder="add what ToDo"
+                                        value={this.state.name}
+                                        name="name"
+                                        onChange={this.handleChange}
+                                    />
+                                ) :
+                                (
+                                    <span>{this.state.name}</span>
+                                )
+
+                        }
                         <Checkbox>
                             <input
                                 type="checkbox"
