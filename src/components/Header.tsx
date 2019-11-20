@@ -6,7 +6,7 @@ import AuthButton from "./AuthButton"
 import {
     BrowserRouter as Router,
     Route,
-    Link, BrowserRouter,
+    Link,
 } from 'react-router-dom'
 import Button from '@material-ui/core/Button';
 import CircularProgress from '@material-ui/core/CircularProgress';
