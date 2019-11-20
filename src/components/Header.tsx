@@ -21,7 +21,6 @@ import {Grid} from "@material-ui/core";
 import TodoList from "./TodoList";
 import Profile from "./Profile";
 import OtherTodo from "./OtherTodo"
-import Card from "@material-ui/core/Card";
 
 interface IProps {
     auth?:any,
