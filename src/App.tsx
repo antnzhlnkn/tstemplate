@@ -13,7 +13,6 @@ import TodoList from "./components/TodoList";
 import Profile from "./components/Profile"
 import Header from "./components/Header"
 
-
 class App extends Component <any, any>  {
   render() {
     return (
