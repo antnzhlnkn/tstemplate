@@ -16,4 +16,4 @@ jobs:
         ACCESS_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         BRANCH: gh-pages
         FOLDER: build
-        BUILD_SCRIPT: npm i && REACT_APP_API_KEY=${{ secrets.API_KEY }} REACT_APP_APP_ID=${{ secrets.APP_ID }} REACT_APP_AUTH_DOMAIN=${{ secrets.AUTH_DOMAIN }} REACT_APP_DATABASE_URL=${{ secrets.DATABASE_URL }} REACT_APP_PROJECT_ID=${{ secrets.PROJECT_ID }} REACT_APP_STORAGE_BUCKET=${{ secrets.STORAGE_BUCKET }} npm run build
+        BUILD_SCRIPT: yarn && REACT_APP_API_KEY=${{ secrets.API_KEY }} REACT_APP_APP_ID=${{ secrets.APP_ID }} REACT_APP_AUTH_DOMAIN=${{ secrets.AUTH_DOMAIN }} REACT_APP_DATABASE_URL=${{ secrets.DATABASE_URL }} REACT_APP_PROJECT_ID=${{ secrets.PROJECT_ID }} REACT_APP_STORAGE_BUCKET=${{ secrets.STORAGE_BUCKET }} yarn run build
