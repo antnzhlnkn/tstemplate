@@ -2,6 +2,7 @@
   "name": "todots",
   "version": "0.1.0",
   "private": true,
+  "homepage": "https://antnzhlnkn.github.io/tstemplate/",
   "dependencies": {
     "@babel/runtime": "^7.7.2",
     "@date-io/date-fns": "^1.3.11",
