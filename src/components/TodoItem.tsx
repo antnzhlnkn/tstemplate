@@ -65,7 +65,7 @@ class TodoItem extends Component<IIodoItemProps, IIodoItemState> {
                                     />
                                 ) :
                                 (
-                                    <span>{this.state.name}</span>
+                                    <span>for test</span>
                                 )
 
                         }
