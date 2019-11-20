@@ -6,6 +6,7 @@ import Card from '@material-ui/core/Card';
 import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import Checkbox from '@material-ui/core/Checkbox';
+import {Input} from "@material-ui/core";
 
 interface IIodoItemProps {
     item: any;
@@ -53,7 +54,7 @@ class TodoItem extends Component<IIodoItemProps, IIodoItemState> {
             <div>
                 <Card>
                     <CardContent>
-                        <input
+                        <Input
                             type="text"
                             placeholder="add what ToDo"
                             value={this.state.name}
