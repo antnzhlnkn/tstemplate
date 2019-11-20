@@ -7,65 +7,48 @@ import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import Checkbox from '@material-ui/core/Checkbox';
 
-interface ConstructorParams {
-    props: any;
+interface IIodoItemProps {
+    item: any;
 }
 
-class TodoItem extends Component<any,any> {
-    constructor({props}: ConstructorParams) {
+interface IIodoItemState{
+    isEdit: boolean;
+    name: string;
+    isDone: boolean;
+    isPrivate: boolean;
+}
+
+class TodoItem extends Component<IIodoItemProps, IIodoItemState> {
+    constructor(props: IIodoItemProps) {
         super(props);
         this.state = {
-            name: 'asd',
+            name: props.item.name,
             isDone: false,
-            edit: false
+            isEdit: false,
+            isPrivate: false,
         };
-        this.handleChange = this.handleChange.bind(this);
-        this.handleCheck = this.handleCheck.bind(this);
-        this.handleSave = this.handleSave.bind(this);
-        this.handleEdit = this.handleEdit.bind(this)
     }
 
-    private handleChange(event: any) {
+    private handleChange = (event: any) => {
         const {name, value} = event.target;
-        this.setState({[name]: value})
+        this.setState({name: value})
     }
 
-    private handleCheck(event : any) {
+    private handleCheck = (event: any) => {
         const {name, checked} = event.target;
-        this.setState({[name]: checked})
+        this.setState({name: checked})
     }
 
-    private handleEdit() {
-        this.setState({edit: true})
+    private handleEdit = () => {
+        this.setState({isEdit: true})
     }
 
-    handleSave() {
-        this.setState({edit: false})
+    handleSave = () => {
+        this.setState({isEdit: false})
     }
 
-    renderNorm = () => {
-        return (
-            <div>
-                <Card className="Item">
-                    <CardContent>
-                        <span>{this.state.name}</span>
-                        <Checkbox>
-                            <input
-                                type="checkbox"
-                                name="isDone"
-                                checked={this.state.isDone}
-                                onChange={this.handleCheck}
-                            />
-                        </Checkbox>
-                    </CardContent>
-                    <CardActions>
-                        <button onClick={this.handleEdit}><EditIcon>Edit</EditIcon></button>
-                    </CardActions>
-                </Card>
-            </div>
-        )
-    };
-    renderEdit = () => {
+    render() {
+        const {isEdit} = this.state;
         return (
             <div>
                 <Card>
@@ -87,20 +70,22 @@ class TodoItem extends Component<any,any> {
                         </Checkbox>
                     </CardContent>
                     <CardActions>
-                        <button onClick={this.handleSave}><SaveIcon>Save</SaveIcon></button>
-                        <button onClick={() => this.props.handleDelete(this.props.item.id)}><DeleteIcon>Delete
-                            item</DeleteIcon></button>
+                        {
+                            isEdit ? (
+                                    <>
+                                        <button onClick={this.handleSave}><SaveIcon>Save</SaveIcon></button>
+                                        <button><DeleteIcon>Delete item</DeleteIcon></button>
+                                    </>
+                                )
+                                :
+                                (
+
+                                    <button onClick={this.handleEdit}><EditIcon>Edit</EditIcon></button>
+                                )
+                        }
                     </CardActions>
                 </Card>
             </div>
-        )
-    };
-
-
-    render() {
-        console.log(this.props);
-        return (
-            this.state.edit ? this.renderEdit() : this.renderNorm()
         );
     }
 }
