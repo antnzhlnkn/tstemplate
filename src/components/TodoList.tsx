@@ -130,14 +130,13 @@ class TodoList extends Component<IProps,any> {
 
     render() {
         const {todos} : any= this.props;
-        const todoItems = todos.map((item:any) => <TodoItem key={item.id} item={item}/>)
+        const todoItems = todos.map((item:any) => <TodoItem key={item.id} item={item}/>);
 
         return (
             <div>
                 <div>
                     {todoItems}
                 </div>
-                <AddTodo />
             </div>
         )
     }

@@ -18,7 +18,7 @@ import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
 import {Grid} from "@material-ui/core";
-import TodoList from "./TodoList";
+import Home from "../containers/Home";
 import Profile from "./Profile";
 import OtherTodo from "./OtherTodo"
 
@@ -51,7 +51,7 @@ export class Header extends Component<IProps,any> {
                     <Button><Link to='/tstemplate'>Home</Link></Button>
                     <Button><Link to='/tstemplate/other'>Other</Link></Button>
                     <Button><Link to='/tstemplate/profile'>Profile</Link></Button>
-                    <Route exact path='/tstemplate' component={TodoList} />
+                    <Route exact path='/tstemplate' component={Home} />
                     <Route path='/tstemplate/other' component={OtherTodo} />
                     <Route path='/tstemplate/profile' component={Profile} />
                 </Router>
