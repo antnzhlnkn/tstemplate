@@ -24,7 +24,7 @@ interface IProps {
 }
 interface IState {
     todo: string,
-    isprivate:boolean,
+    isPrivate:boolean,
     isDone:boolean,
     date? : any
 }
@@ -32,7 +32,7 @@ class AddTodo extends Component<IProps,IState> {
 
     public state: IState = {
         todo: '',
-        isprivate: false,
+        isPrivate: true,
         isDone:false,
         date: new Date()
     };
@@ -44,7 +44,7 @@ class AddTodo extends Component<IProps,IState> {
                 uid: this.props.uid,
                 name: this.state.todo,
                 isDone : this.state.isDone,
-                isprivate : this.state.isprivate,
+                isPrivate : this.state.isPrivate,
                 date: this.state.date
             }
         );
@@ -85,8 +85,8 @@ class AddTodo extends Component<IProps,IState> {
                 <FormControlLabel
                      control={
                           <Checkbox
-                               checked={this.state.isprivate}
-                               onChange={(evt) => this.setState({ isprivate: evt.target.checked })}
+                               checked={this.state.isPrivate}
+                               onChange={(evt) => this.setState({ isPrivate: evt.target.checked })}
                                value="isprivate"
                           />
                      }

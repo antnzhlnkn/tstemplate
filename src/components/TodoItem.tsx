@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import DeleteIcon from '@material-ui/icons/Delete';
 import SaveIcon from '@material-ui/icons/Save'
 import EditIcon from '@material-ui/icons/Edit'
+import RefreshIcon from '@material-ui/icons/Refresh';
 import Card from '@material-ui/core/Card';
 import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
@@ -11,13 +12,19 @@ import Box from "@material-ui/core/Box";
 import moment from "moment";
 import Button from "@material-ui/core/Button";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
+import {compose} from "redux";
+import {connect} from "react-redux";
+import {firestoreConnect} from "react-redux-firebase";
 
 
 interface IIodoItemProps {
     item: any;
+    firestore: object;
 }
 
 interface IIodoItemState {
+    uid: string;
+    id: string;
     isEdit: boolean;
     name: string;
     isDone: boolean;
@@ -29,11 +36,13 @@ class TodoItem extends Component<IIodoItemProps, IIodoItemState> {
     constructor(props: IIodoItemProps) {
         super(props);
         this.state = {
+            uid: props.item.uid,
+            id: props.item.id,
             name: props.item.name,
             isDone: props.item.isDone,
-            isEdit: false,
-            isPrivate: props.item.isprivate,
-            date: props.item.date
+            isPrivate: props.item.isPrivate,
+            date: props.item.date,
+            isEdit: false
         };
     }
 
@@ -42,17 +51,60 @@ class TodoItem extends Component<IIodoItemProps, IIodoItemState> {
         this.setState({name: value})
     };
 
-    private handleCheck = (event: any) => {
+    private handleDone = (event: any) => {
         const {checked} = event.target;
         this.setState({isDone: checked})
+    };
+
+    private handlePrivate = (event: any) => {
+        const {checked} = event.target;
+        this.setState({isPrivate: checked})
     };
 
     private handleEdit = () => {
         this.setState({isEdit: true})
     };
 
-    handleSave = () => {
+    private handleDelete = () => {
+        const {id} :IIodoItemState = this.state;
+        const {collection} :any = this.props.firestore;
+        collection('todos')
+            .doc(id)
+            .delete()
+    };
+
+    private handleSave = () => {
+        const {collection} : any = this.props.firestore;
+        const {uid, date, id, name, isDone , isPrivate} :IIodoItemState = this.state;
+        collection('todos')
+            .doc(id)
+            .set(
+                {
+                    name: name,
+                    isDone: isDone,
+                    uid: uid,
+                    isPrivate: isPrivate,
+                    date: date
+                }
+            );
         this.setState({isEdit: false})
+    };
+
+    private handleRefresh = () => {
+        const {collection} : any = this.props.firestore;
+        const {uid, id, name, isDone , isPrivate} :IIodoItemState = this.state;
+        collection('todos')
+            .doc(id)
+            .set(
+                {
+                    name: name,
+                    isDone: isDone,
+                    uid: uid,
+                    isPrivate: isPrivate,
+                    date: new Date()
+                }
+            );
+        this.setState({isEdit: false, date:this.props.item.date})
     };
 
     render() {
@@ -83,10 +135,22 @@ class TodoItem extends Component<IIodoItemProps, IIodoItemState> {
                                     disabled={!this.state.isEdit}
                                     name="isDone"
                                     checked={this.state.isDone}
-                                    onChange={this.handleCheck}
+                                    onChange={this.handleDone}
                                 />
                             }
                             label="Done"
+                            />
+                            <FormControlLabel
+                                control={
+                                    <Checkbox
+                                        disabled={!this.state.isEdit}
+                                        checked={this.state.isPrivate}
+                                        onChange={this.handlePrivate}
+                                        name="isPrivate"
+                                        value="isPrivate"
+                                    />
+                                }
+                                label="Task is private"
                             />
                         </div>
                         <div>
@@ -101,7 +165,8 @@ class TodoItem extends Component<IIodoItemProps, IIodoItemState> {
                             isEdit ? (
                                     <>
                                         <Button onClick={this.handleSave}><SaveIcon>Save</SaveIcon></Button>
-                                        <Button><DeleteIcon>Delete item</DeleteIcon></Button>
+                                        <Button onClick={this.handleRefresh}><RefreshIcon>Refresh</RefreshIcon></Button>
+                                        <Button onClick={this.handleDelete}><DeleteIcon>Delete item</DeleteIcon></Button>
                                     </>
                                 )
                                 :
@@ -116,5 +181,13 @@ class TodoItem extends Component<IIodoItemProps, IIodoItemState> {
         );
     }
 }
+const mapStateToProps = ()=> {
+};
 
-export default TodoItem;
+const mapDispatchToProps = () => {
+};
+
+export default compose<any>(
+    connect(mapStateToProps, mapDispatchToProps),
+    firestoreConnect(),
+)(TodoItem)

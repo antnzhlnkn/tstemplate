@@ -95,7 +95,7 @@ export default compose<any>(
                 {
                     collection: 'todos',
                     where: [
-                        ['isprivate', '==', false]
+                        ['isPrivate', '==', false]
                     ]
                 }
             ]
