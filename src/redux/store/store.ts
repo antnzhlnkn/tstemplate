@@ -22,7 +22,7 @@ enhancers = [
         useFirestoreForProfile: true,
     })
 ];
-const {devToolsExtension} :any= window;
+const {devToolsExtension}: any = window;
 const reduxDevToolsExtension = devToolsExtension;
 if (
     process.env.NODE_ENV === "development" &&

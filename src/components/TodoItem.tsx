@@ -74,23 +74,6 @@ class TodoItem extends Component<ITodoItemProps, ITodoItemState> {
         this.setState({isEdit: true})
     };
 
-    private handleDelete = () => {
-        const {id} :ITodoItemState = this.state;
-        this.props.handleDelete({id});
-    };
-
-    private handleSave = () => {
-        const {uid, date, id, name, isDone , isPrivate} :ITodoItemState = this.state;
-        this.props.handleSave({uid, date, id ,name, isDone, isPrivate});
-        this.setState({isEdit: false})
-    };
-
-    private handleRefresh = () => {
-        const {uid, id, name, isDone , isPrivate} :ITodoItemState = this.state;
-        this.props.handleRefresh({uid, id ,name, isDone, isPrivate});
-        this.setState({isEdit: false})
-    };
-
     render() {
         const {isEdit} = this.state;
         return (
@@ -112,16 +95,16 @@ class TodoItem extends Component<ITodoItemProps, ITodoItemState> {
                                 )
                         }
                         <div>
-                        <FormControlLabel
-                            control={
-                                <Checkbox
-                                    disabled={!this.state.isEdit}
-                                    name="isDone"
-                                    checked={this.state.isDone}
-                                    onChange={this.handleDone}
-                                />
-                            }
-                            label="Done"
+                            <FormControlLabel
+                                control={
+                                    <Checkbox
+                                        disabled={!this.state.isEdit}
+                                        name="isDone"
+                                        checked={this.state.isDone}
+                                        onChange={this.handleDone}
+                                    />
+                                }
+                                label="Done"
                             />
                             <FormControlLabel
                                 control={
@@ -163,8 +146,26 @@ class TodoItem extends Component<ITodoItemProps, ITodoItemState> {
             </Box>
         );
     }
+
+    private handleDelete = () => {
+        const {id}: ITodoItemState = this.state;
+        this.props.handleDelete({id});
+    };
+
+    private handleSave = () => {
+        const {uid, date, id, name, isDone, isPrivate}: ITodoItemState = this.state;
+        this.props.handleSave({uid, date, id, name, isDone, isPrivate});
+        this.setState({isEdit: false})
+    };
+
+    private handleRefresh = () => {
+        const {uid, id, name, isDone, isPrivate}: ITodoItemState = this.state;
+        this.props.handleRefresh({uid, id, name, isDone, isPrivate});
+        this.setState({isEdit: false})
+    };
 }
-const mapStateToProps = ()=> {
+
+const mapStateToProps = () => {
 };
 
 const mapDispatchToProps = () => {

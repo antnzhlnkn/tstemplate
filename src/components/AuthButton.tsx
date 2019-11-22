@@ -1,17 +1,17 @@
 import React, {Component} from 'react'
-import { connect } from 'react-redux'
-import { compose } from 'redux'
+import {connect} from 'react-redux'
+import {compose} from 'redux'
 import {firebaseConnect, isEmpty, isLoaded} from 'react-redux-firebase'
 import Button from '@material-ui/core/Button';
 import CircularProgress from '@material-ui/core/CircularProgress';
 
 interface IProps {
-    auth?:object,
+    auth?: object,
     firestore?: any,
-    firebase?:any
+    firebase?: any
 }
 
-export class AuthButton extends Component<IProps,any> {
+export class AuthButton extends Component<IProps, any> {
 
     render() {
         if (!isLoaded(this.props.auth)) {
@@ -25,9 +25,9 @@ export class AuthButton extends Component<IProps,any> {
             return (
                 <div>
                     <Button variant="outlined"
-                        onClick={
-                            () => this.props.firebase.login({provider: 'google', type: 'popup'})
-                        }
+                            onClick={
+                                () => this.props.firebase.login({provider: 'google', type: 'popup'})
+                            }
                     >Log in with Google
                     </Button>
                 </div>
@@ -35,10 +35,10 @@ export class AuthButton extends Component<IProps,any> {
         }
         return (
             <div>
-            <Button variant="outlined"
-            style={{width: "100%"}}
-            onClick={() => this.props.firebase.logout()}
-        > Logout</Button>
+                <Button variant="outlined"
+                        style={{width: "100%"}}
+                        onClick={() => this.props.firebase.logout()}
+                > Logout</Button>
                 {console.log(this.state)}
             </div>
         )
@@ -49,8 +49,7 @@ const mapStateToProps = (state: any) => ({
     auth: state.firebase.auth
 });
 
-const mapDispatchToProps = {
-};
+const mapDispatchToProps = {};
 
 export default compose<any>(
     connect(mapStateToProps, mapDispatchToProps),

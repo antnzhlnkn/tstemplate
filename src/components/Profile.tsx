@@ -1,25 +1,19 @@
 import React, {Component} from 'react'
-import { connect } from 'react-redux'
-import { compose } from 'redux'
-import {firebaseConnect, isEmpty, isLoaded} from 'react-redux-firebase'
-import Button from '@material-ui/core/Button';
+import {connect} from 'react-redux'
+import {compose} from 'redux'
+import {firebaseConnect, isLoaded} from 'react-redux-firebase'
 import CircularProgress from '@material-ui/core/CircularProgress';
 import Box from '@material-ui/core/Box';
 import moment from 'moment';
-import {Link} from "react-router-dom";
 import {Container} from "./container";
 
 interface IProps {
-    auth?:any,
+    auth?: any,
     firestore?: any,
-    firebase?:any,
+    firebase?: any,
 }
 
-export class Profile extends Component<IProps,any> {
-
-    private CheckProfile = () => {
-        console.log(this.props.auth)
-    };
+export class Profile extends Component<IProps, any> {
 
     render() {
         if (!isLoaded(this.props.auth)) {
@@ -31,50 +25,51 @@ export class Profile extends Component<IProps,any> {
         }
         return (
             <Container>
-            <div style={{ width: '50%' }}>
-                <Box display="flex" flexDirection="row" p={1} m={1} bgcolor="background.paper">
-                    <Box p={1} m={1} >
-                        Name:
+                <div style={{width: '50%'}}>
+                    <Box display="flex" flexDirection="row" p={1} m={1} bgcolor="background.paper">
+                        <Box p={1} m={1}>
+                            Name:
+                        </Box>
+                        <Box p={1} m={1}>
+                            {this.props.auth.displayName}
+                        </Box>
                     </Box>
-                    <Box p={1} m={1} >
-                        {this.props.auth.displayName}
+                    <Box display="flex" flexDirection="row" p={1} m={1} bgcolor="background.paper">
+                        <Box p={1} m={1}>
+                            Email:
+                        </Box>
+                        <Box p={1} m={1}>
+                            {this.props.auth.email}
+                        </Box>
                     </Box>
-                 </Box>
-                <Box display="flex" flexDirection="row" p={1} m={1} bgcolor="background.paper">
-                    <Box p={1} m={1} >
-                        Email:
+                    <Box display="flex" flexDirection="row" p={1} m={1} bgcolor="background.paper">
+                        <Box p={1} m={1}>
+                            Registration date:
+                        </Box>
+                        <Box p={1} m={1}>
+                            {moment.unix(this.props.auth.createdAt / 1000).format("LLLL")}
+                        </Box>
                     </Box>
-                    <Box p={1} m={1} >
-                        {this.props.auth.email}
+                    <Box display="flex" flexDirection="row" p={1} m={1} bgcolor="background.paper">
+                        <Box p={1} m={1}>
+                            Last login date:
+                        </Box>
+                        <Box p={1} m={1}>
+                            {moment.unix(this.props.auth.lastLoginAt / 1000).format("LLLL")}
+                        </Box>
                     </Box>
-                </Box>
-                <Box display="flex" flexDirection="row" p={1} m={1} bgcolor="background.paper">
-                    <Box p={1} m={1} >
-                        Registration date:
+                    <Box display="flex" flexDirection="row" p={1} m={1} bgcolor="background.paper">
+                        <Box p={1} m={1}>
+                            Avatar
+                        </Box>
+                        <Box p={1} m={1}>
+                            <img width="100" height="100"
+                                 alt='Avatar'
+                                 src={this.props.auth.photoURL}
+                            />
+                        </Box>
                     </Box>
-                    <Box p={1} m={1} >
-                        {moment.unix(this.props.auth.createdAt/1000).format("LLLL")}
-                    </Box>
-                </Box>
-                <Box display="flex" flexDirection="row" p={1} m={1} bgcolor="background.paper">
-                    <Box p={1} m={1} >
-                        Last login date:
-                    </Box>
-                    <Box p={1} m={1} >
-                        {moment.unix(this.props.auth.lastLoginAt/1000).format("LLLL")}
-                    </Box>
-                </Box>
-                <Box display="flex" flexDirection="row" p={1} m={1} bgcolor="background.paper">
-                    <Box p={1} m={1} >
-                        Avatar
-                    </Box>
-                    <Box p={1} m={1} >
-                        <img  width="100" height="100"
-                            src={this.props.auth.photoURL}
-                        />
-                    </Box>
-                </Box>
-            </div>
+                </div>
             </Container>
         )
     }
@@ -84,8 +79,7 @@ const mapStateToProps = (state: any) => ({
     auth: state.firebase.auth
 });
 
-const mapDispatchToProps = {
-};
+const mapDispatchToProps = {};
 
 export default compose<any>(
     connect(mapStateToProps, mapDispatchToProps),

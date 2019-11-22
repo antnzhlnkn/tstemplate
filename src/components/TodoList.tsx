@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {compose} from 'redux'
-import {firestoreConnect, isLoaded} from 'react-redux-firebase'
+import {firestoreConnect} from 'react-redux-firebase'
 import TodoItem from "./TodoItem";
 
 interface ITodoItemState {
@@ -27,8 +27,24 @@ interface IProps {
 }
 
 class TodoList extends Component<IProps> {
-    private handleSave = ({uid, date, id, name, isDone , isPrivate}:ITodoItemState) => {
-        const {collection} : any = this.props.firestore;
+    render() {
+        const {todos}: any = this.props;
+
+        return (
+            <div>
+                <div>
+                    {
+                        todos.map((item: any) => <TodoItem key={item.id} item={item} handleSave={this.handleSave}
+                                                           handleRefresh={this.handleRefresh}
+                                                           handleDelete={this.handleDelete}/>)
+                    }
+                </div>
+            </div>
+        )
+    }
+
+    private handleSave = ({uid, date, id, name, isDone, isPrivate}: ITodoItemState) => {
+        const {collection}: any = this.props.firestore;
         collection('todos')
             .doc(id)
             .set(
@@ -42,8 +58,8 @@ class TodoList extends Component<IProps> {
             );
     };
 
-    private handleRefresh = ({uid, id, name, isDone , isPrivate}:ITodoItemState) => {
-        const {collection} : any = this.props.firestore;
+    private handleRefresh = ({uid, id, name, isDone, isPrivate}: ITodoItemState) => {
+        const {collection}: any = this.props.firestore;
         collection('todos')
             .doc(id)
             .set(
@@ -57,49 +73,36 @@ class TodoList extends Component<IProps> {
             );
     };
 
-    private handleDelete = ({id}:ITodoItemState) => {
-        const {collection} :any = this.props.firestore;
+    private handleDelete = ({id}: ITodoItemState) => {
+        const {collection}: any = this.props.firestore;
         collection('todos')
             .doc(id)
             .delete()
     };
-
-    render() {
-        const {todos} : any= this.props;
-
-        return (
-            <div>
-                <div>
-                    {
-                        todos.map((item:any) => <TodoItem key={item.id} item={item} handleSave={this.handleSave} handleRefresh={this.handleRefresh} handleDelete={this.handleDelete} />)
-                    }
-                </div>
-            </div>
-        )
-    }
 }
+
 const mapStateToProps = (state: any) => {
     return {
         uid: state.firebase.auth.uid,
         todos: state.firestore.ordered.todos ? state.firestore.ordered.todos : [],
         selectedTodo: state.todos.selectedTodo,
-        completedTodo :state.todos.completedTodo,
-        privatedTodo :state.todos.privatedTodo
+        completedTodo: state.todos.completedTodo,
+        privatedTodo: state.todos.privatedTodo
     }
 };
 
 const mapDispatchToProps = (dispatch: any) => {
     return {
-        selectTodo: (todo : any) => dispatch({ type: 'selectTodo', todo }),
-        completTodo: (todo : any) => dispatch ({ type: 'completTodo', todo}),
-        privateTodo: (todo : any) => dispatch({ type: 'privateTodo', todo }),
+        selectTodo: (todo: any) => dispatch({type: 'selectTodo', todo}),
+        completTodo: (todo: any) => dispatch({type: 'completTodo', todo}),
+        privateTodo: (todo: any) => dispatch({type: 'privateTodo', todo}),
     }
 };
 
 export default compose<any>(
     connect(mapStateToProps, mapDispatchToProps),
-    firestoreConnect((props:any) => {
-        const {uid } : any = props;
+    firestoreConnect((props: any) => {
+        const {uid}: any = props;
         if (!uid) return [];
             return [
                 {

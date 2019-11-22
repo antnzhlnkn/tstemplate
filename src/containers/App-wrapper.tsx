@@ -1,8 +1,8 @@
 import * as React from "react";
-import { Dispatch } from "redux";
-import { connect } from "react-redux";
+import {Dispatch} from "redux";
+import {connect} from "react-redux";
 
-import { Nav } from "../components/nav";
+import {Nav} from "../components/nav";
 import {isLoaded} from "react-redux-firebase";
 import CircularProgress from "@material-ui/core/CircularProgress";
 
@@ -17,7 +17,8 @@ interface IAppWrapperProps {
     dispatch?: Dispatch<any>;
 }
 
-interface IAppWrapperState { }
+interface IAppWrapperState {
+}
 
 @(connect as any)(mapStateToProps)
 
@@ -33,17 +34,17 @@ export class AppWrapper extends React.Component<IAppWrapperProps, IAppWrapperSta
             )
         }
         if (this.props.profileStore.uid) {
-            links.push({ title: "Home", to: "/" });
-            links.push({ title: "Other", to: "/other" });
-            links.push({ title: "Profile", to: "/profile" });
+            links.push({title: "Home", to: "/"});
+            links.push({title: "Other", to: "/other"});
+            links.push({title: "Profile", to: "/profile"});
         } else {
-            links.push({ title: "Login", to: "/auth/login" });
+            links.push({title: "Login", to: "/auth/login"});
         }
 
         return (
             <main className="wrapper">
                 <Nav
-                    links={links} />
+                    links={links}/>
 
                 {this.props.children}
 
