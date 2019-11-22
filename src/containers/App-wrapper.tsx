@@ -3,6 +3,8 @@ import { Dispatch } from "redux";
 import { connect } from "react-redux";
 
 import { Nav } from "../components/nav";
+import {isLoaded} from "react-redux-firebase";
+import CircularProgress from "@material-ui/core/CircularProgress";
 
 
 const mapStateToProps = (state: any) => ({
@@ -23,6 +25,14 @@ export class AppWrapper extends React.Component<IAppWrapperProps, IAppWrapperSta
 
     render() {
         const links = [];
+        console.log(this.props.profileStore.isLoaded)
+        if (!isLoaded(this.props.profileStore)) {
+            return (
+                <span>
+                    <CircularProgress color="secondary"/>
+                </span>
+            )
+        }
         if (this.props.profileStore.uid) {
             links.push({ title: "Home", to: "/" });
         } else {

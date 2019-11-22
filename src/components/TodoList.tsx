@@ -4,6 +4,16 @@ import {compose} from 'redux'
 import {firestoreConnect, isLoaded} from 'react-redux-firebase'
 import TodoItem from "./TodoItem";
 
+interface ITodoItemState {
+    uid: string;
+    id: string;
+    isEdit: boolean;
+    name: string;
+    isDone: boolean;
+    isPrivate: boolean;
+    date: any;
+}
+
 interface IProps {
     uid?: string,
     todos?: object,
@@ -16,10 +26,9 @@ interface IProps {
     firestore?: object
 }
 
-class TodoList extends Component<IProps,any> {
-    private handleSave = () => {
+class TodoList extends Component<IProps> {
+    private handleSave = ({uid, date, id, name, isDone , isPrivate}:ITodoItemState) => {
         const {collection} : any = this.props.firestore;
-        const {uid, date, id, name, isDone , isPrivate} :IIodoItemState = this.state;
         collection('todos')
             .doc(id)
             .set(
@@ -31,7 +40,28 @@ class TodoList extends Component<IProps,any> {
                     date: date
                 }
             );
-        this.setState({isEdit: false})
+    };
+
+    private handleRefresh = ({uid, id, name, isDone , isPrivate}:ITodoItemState) => {
+        const {collection} : any = this.props.firestore;
+        collection('todos')
+            .doc(id)
+            .set(
+                {
+                    name: name,
+                    isDone: isDone,
+                    uid: uid,
+                    isPrivate: isPrivate,
+                    date: new Date()
+                }
+            );
+    };
+
+    private handleDelete = ({id}:ITodoItemState) => {
+        const {collection} :any = this.props.firestore;
+        collection('todos')
+            .doc(id)
+            .delete()
     };
 
     render() {
@@ -41,7 +71,7 @@ class TodoList extends Component<IProps,any> {
             <div>
                 <div>
                     {
-                        todos.map((item:any) => <TodoItem key={item.id} item={item} handleSave={this.handleSave} />)
+                        todos.map((item:any) => <TodoItem key={item.id} item={item} handleSave={this.handleSave} handleRefresh={this.handleRefresh} handleDelete={this.handleDelete} />)
                     }
                 </div>
             </div>

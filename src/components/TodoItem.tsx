@@ -17,12 +17,15 @@ import {connect} from "react-redux";
 import {firestoreConnect} from "react-redux-firebase";
 
 
-interface IIodoItemProps {
+interface ITodoItemProps {
     item: any;
     firestore: object;
+    handleSave: any;
+    handleRefresh: any;
+    handleDelete: any;
 }
 
-interface IIodoItemState {
+interface ITodoItemState {
     uid: string;
     id: string;
     isEdit: boolean;
@@ -32,8 +35,8 @@ interface IIodoItemState {
     date: any;
 }
 
-class TodoItem extends Component<IIodoItemProps, IIodoItemState> {
-    constructor(props: IIodoItemProps) {
+class TodoItem extends Component<ITodoItemProps, ITodoItemState> {
+    constructor(props: ITodoItemProps) {
         super(props);
         this.state = {
             uid: props.item.uid,
@@ -44,6 +47,12 @@ class TodoItem extends Component<IIodoItemProps, IIodoItemState> {
             date: props.item.date,
             isEdit: false
         };
+    }
+
+    componentDidUpdate(prevProps: ITodoItemProps) {
+        if (this.props.item.date !== prevProps.item.date) {
+            this.setState({date: this.props.item.date})
+        }
     }
 
     private handleChange = (event: any) => {
@@ -66,36 +75,20 @@ class TodoItem extends Component<IIodoItemProps, IIodoItemState> {
     };
 
     private handleDelete = () => {
-        const {id} :IIodoItemState = this.state;
-        const {collection} :any = this.props.firestore;
-        collection('todos')
-            .doc(id)
-            .delete()
+        const {id} :ITodoItemState = this.state;
+        this.props.handleDelete({id});
     };
 
     private handleSave = () => {
-        const {collection} : any = this.props.firestore;
-        const {uid, date, id, name, isDone , isPrivate} :IIodoItemState = this.state;
-
+        const {uid, date, id, name, isDone , isPrivate} :ITodoItemState = this.state;
         this.props.handleSave({uid, date, id ,name, isDone, isPrivate});
         this.setState({isEdit: false})
     };
 
     private handleRefresh = () => {
-        const {collection} : any = this.props.firestore;
-        const {uid, id, name, isDone , isPrivate} :IIodoItemState = this.state;
-        collection('todos')
-            .doc(id)
-            .set(
-                {
-                    name: name,
-                    isDone: isDone,
-                    uid: uid,
-                    isPrivate: isPrivate,
-                    date: new Date()
-                }
-            );
-        this.setState({isEdit: false, date:this.props.item.date})
+        const {uid, id, name, isDone , isPrivate} :ITodoItemState = this.state;
+        this.props.handleRefresh({uid, id ,name, isDone, isPrivate});
+        this.setState({isEdit: false})
     };
 
     render() {
@@ -117,7 +110,6 @@ class TodoItem extends Component<IIodoItemProps, IIodoItemState> {
                                 (
                                     <div>{this.state.name}</div>
                                 )
-
                         }
                         <div>
                         <FormControlLabel

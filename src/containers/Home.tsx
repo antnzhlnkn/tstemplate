@@ -11,7 +11,6 @@ class Home extends Component<any,any> {
     render() {
         return (
             <Container>
-                <h1>Admin panel</h1>
                 <ul>
                     <li>
                         <Link to="/other">Others</Link>
