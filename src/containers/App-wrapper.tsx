@@ -25,7 +25,6 @@ export class AppWrapper extends React.Component<IAppWrapperProps, IAppWrapperSta
 
     render() {
         const links = [];
-        console.log(this.props.profileStore.isLoaded)
         if (!isLoaded(this.props.profileStore)) {
             return (
                 <span>
@@ -35,6 +34,8 @@ export class AppWrapper extends React.Component<IAppWrapperProps, IAppWrapperSta
         }
         if (this.props.profileStore.uid) {
             links.push({ title: "Home", to: "/" });
+            links.push({ title: "Other", to: "/other" });
+            links.push({ title: "Profile", to: "/profile" });
         } else {
             links.push({ title: "Login", to: "/auth/login" });
         }

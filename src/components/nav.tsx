@@ -1,6 +1,7 @@
 import * as React from "react";
 import { Container } from "./container";
 import { Link } from "react-router-dom";
+import {Button} from "@material-ui/core";
 
 interface INavLink {
     title: string;
@@ -23,7 +24,7 @@ export const Nav: React.FC<INavProps> = ({ links }) => (
                         <div className="navigation-links">
                             {
                                 links.map(navLink => (
-                                    <div key={navLink.title + navLink.to} className="navigation-link--wrapper">
+                                    <Button key={navLink.title + navLink.to} className="navigation-link--wrapper">
                                         {
                                             navLink.to ?
                                                 <Link className="navigation-link" to={navLink.to}><p>{navLink.title}</p></Link>
@@ -36,7 +37,7 @@ export const Nav: React.FC<INavProps> = ({ links }) => (
                                                     <p>{navLink.title}</p>
                                                 </a>
                                         }
-                                    </div>
+                                    </Button>
                                 ))}
                         </div>
                     </div>

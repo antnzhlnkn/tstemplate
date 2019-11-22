@@ -11,14 +11,6 @@ class Home extends Component<any,any> {
     render() {
         return (
             <Container>
-                <ul>
-                    <li>
-                        <Link to="/other">Others</Link>
-                    </li>
-                    <li>
-                        <Link to="/profile">Users panel</Link>
-                    </li>
-                </ul>
                 <TodoList/>
                 <AddTodo />
             </Container>

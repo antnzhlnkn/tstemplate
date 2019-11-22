@@ -6,6 +6,8 @@ import Button from '@material-ui/core/Button';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import Box from '@material-ui/core/Box';
 import moment from 'moment';
+import {Link} from "react-router-dom";
+import {Container} from "./container";
 
 interface IProps {
     auth?:any,
@@ -28,6 +30,7 @@ export class Profile extends Component<IProps,any> {
             )
         }
         return (
+            <Container>
             <div style={{ width: '50%' }}>
                 <Box display="flex" flexDirection="row" p={1} m={1} bgcolor="background.paper">
                     <Box p={1} m={1} >
@@ -72,6 +75,7 @@ export class Profile extends Component<IProps,any> {
                     </Box>
                 </Box>
             </div>
+            </Container>
         )
     }
 }

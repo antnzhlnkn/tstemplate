@@ -13,8 +13,6 @@ export class PrivateRoute extends React.Component<IPrivateRouterProps, IPrivateR
 
     render() {
         const { store, component: Component, ...rest } = this.props as any;
-        const asd = store.getState()
-        console.log(asd.firebase.auth)
         const { uid } = (store.getState() as any).firebase.auth;
         return (
             <Route

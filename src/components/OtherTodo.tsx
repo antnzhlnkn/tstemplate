@@ -6,6 +6,9 @@ import moment from 'moment';
 import Checkbox from '@material-ui/core/Checkbox';
 import Card from '@material-ui/core/Card';
 import {Box} from "@material-ui/core";
+import {Link} from "react-router-dom";
+import {Container} from "./container";
+import {Nav} from "./nav";
 
 interface IProps {
     uid?: string,
@@ -59,16 +62,18 @@ class OtherTodo extends Component<IProps,any> {
     }
 
     render() {
+        const links = [];
         const {todos} : any= this.props;
+        links.push({ title: "other", to: "/other" });
         const todoItems = todos.map(
             (item: any) => this.renderTodo({todo: item})
         );
         return (
-            <div>
+            <Container>
                 <div>
                     {todoItems}
                 </div>
-            </div>
+            </Container>
         )
     }
 }
@@ -89,7 +94,7 @@ const mapDispatchToProps = (dispatch: any) => {
 export default compose<any>(
     connect(mapStateToProps, mapDispatchToProps),
     firestoreConnect((props:any) => {
-            const {uid } : any = props;
+            const { uid } : any = props;
             if (!uid) return [];
             return [
                 {
