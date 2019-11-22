@@ -17,15 +17,32 @@ interface IProps {
 }
 
 class TodoList extends Component<IProps,any> {
+    private handleSave = () => {
+        const {collection} : any = this.props.firestore;
+        const {uid, date, id, name, isDone , isPrivate} :IIodoItemState = this.state;
+        collection('todos')
+            .doc(id)
+            .set(
+                {
+                    name: name,
+                    isDone: isDone,
+                    uid: uid,
+                    isPrivate: isPrivate,
+                    date: date
+                }
+            );
+        this.setState({isEdit: false})
+    };
 
     render() {
         const {todos} : any= this.props;
-        const todoItems = todos.map((item:any) => <TodoItem key={item.id} item={item}/>);
 
         return (
             <div>
                 <div>
-                    {todoItems}
+                    {
+                        todos.map((item:any) => <TodoItem key={item.id} item={item} handleSave={this.handleSave} />)
+                    }
                 </div>
             </div>
         )

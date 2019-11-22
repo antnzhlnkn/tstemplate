@@ -76,17 +76,8 @@ class TodoItem extends Component<IIodoItemProps, IIodoItemState> {
     private handleSave = () => {
         const {collection} : any = this.props.firestore;
         const {uid, date, id, name, isDone , isPrivate} :IIodoItemState = this.state;
-        collection('todos')
-            .doc(id)
-            .set(
-                {
-                    name: name,
-                    isDone: isDone,
-                    uid: uid,
-                    isPrivate: isPrivate,
-                    date: date
-                }
-            );
+
+        this.props.handleSave({uid, date, id ,name, isDone, isPrivate});
         this.setState({isEdit: false})
     };
 
