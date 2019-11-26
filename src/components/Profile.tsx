@@ -6,6 +6,7 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 import Box from '@material-ui/core/Box';
 import moment from 'moment';
 import {Container} from "./container";
+import Button from "@material-ui/core/Button";
 
 interface IProps {
     auth?: any,
@@ -69,6 +70,10 @@ export class Profile extends Component<IProps, any> {
                             />
                         </Box>
                     </Box>
+                    <Button variant="outlined"
+                            style={{width: "100%"}}
+                            onClick={() => this.props.firebase.logout()}
+                    > Logout</Button>
                 </div>
             </Container>
         )
