@@ -84,7 +84,7 @@ class TodoItem extends Component<ITodoItemProps, ITodoItemState> {
                             this.state.isEdit ? (
                                     <Input
                                         type="text"
-                                        placeholder="add what ToDo"
+                                        placeholder="Add new task"
                                         value={this.state.name}
                                         name="name"
                                         onChange={this.handleChange}
