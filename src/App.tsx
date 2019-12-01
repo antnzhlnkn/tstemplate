@@ -8,6 +8,7 @@ import AuthButton from "./components/AuthButton"
 import Home from "./containers/Home";
 import Profile from "./components/Profile"
 import OtherTodo from "./components/OtherTodo";
+import History from "./components/history"
 import {AppWrapper} from "./containers/App-wrapper";
 import {PrivateRoute} from "./router/private-router";
 
@@ -23,6 +24,7 @@ class App extends Component <any, any> {
                             <PrivateRoute store={store} exact path="/" component={Home}/>
                             <PrivateRoute store={store} exact path="/other" component={OtherTodo}/>
                             <PrivateRoute store={store} exact path="/profile" component={Profile}/>
+                            <PrivateRoute store={store} exact path="/history" component={History}/>
                         </AppWrapper>
                     </Switch>
                 </Router>

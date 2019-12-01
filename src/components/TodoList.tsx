@@ -6,7 +6,7 @@ import TodoItem from "./TodoItem";
 
 interface ITodoItemState {
     uid: string;
-    id: string;
+    id: any;
     isEdit: boolean;
     name: string;
     isDone: boolean;
@@ -23,7 +23,7 @@ interface IProps {
     completTodo?: any,
     ptivatedTodo?: object,
     privateTodo?: any,
-    firestore?: object
+    firestore?: any
 }
 
 class TodoList extends Component<IProps> {
@@ -58,6 +58,18 @@ class TodoList extends Component<IProps> {
             );
     };
 
+    addHistory(id: ITodoItemState) {
+        this.props.firestore.add(
+            {collection: 'history'},
+            {
+                uid: this.props.uid,
+                todoId: id,
+                comment: "test",
+                date: new Date()
+            }
+        )
+    }
+
     private handleRefresh = ({uid, id, name, isDone, isPrivate}: ITodoItemState) => {
         const {collection}: any = this.props.firestore;
         collection('todos')
@@ -71,6 +83,7 @@ class TodoList extends Component<IProps> {
                     date: new Date()
                 }
             );
+        this.addHistory(id)
     };
 
     private handleDelete = ({id}: ITodoItemState) => {
