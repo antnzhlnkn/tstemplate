@@ -9,6 +9,7 @@ import {Container} from "./container";
 
 interface IProps {
     uid?: string,
+    todoId?: string,
     todos?: object,
     history?: object,
     selectedTodo?: object,
@@ -93,15 +94,16 @@ const mapDispatchToProps = (dispatch: any) => {
 
 export default compose<any>(
     connect(mapStateToProps, mapDispatchToProps),
-    firestoreConnect((props: any, store: any) => {
-            const {uid}: any = props;
-            console.log(store);
+    firestoreConnect((props: any) => {
+            const {uid}: IProps = props;
+            const {todoId}: IProps = props;
+            console.log(todoId)
             if (!uid) return [];
             return [
                 {
                     collection: 'history',
                     where: [
-                        ['uid', '==', uid]
+                        ['todoId', '==', todoId]
                     ]
                 }
             ]
