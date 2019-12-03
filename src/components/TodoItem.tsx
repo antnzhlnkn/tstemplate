@@ -5,6 +5,7 @@ import EditIcon from '@material-ui/icons/Edit'
 import RefreshIcon from '@material-ui/icons/Refresh';
 import HistoryIcon from '@material-ui/icons/History';
 import CancelIcon from '@material-ui/icons/Cancel';
+import CommentIcon from '@material-ui/icons/Comment';
 import Card from '@material-ui/core/Card';
 import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
@@ -17,6 +18,12 @@ import FormControlLabel from "@material-ui/core/FormControlLabel";
 import {compose} from "redux";
 import {connect} from "react-redux";
 import {firestoreConnect} from "react-redux-firebase";
+import TextField from '@material-ui/core/TextField';
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import DialogTitle from '@material-ui/core/DialogTitle';
 
 
 interface ITodoItemProps {
@@ -35,6 +42,8 @@ interface ITodoItemState {
     isDone: boolean;
     isPrivate: boolean;
     date: any;
+    comment: string;
+    open: boolean;
 }
 
 class TodoItem extends Component<ITodoItemProps, ITodoItemState> {
@@ -47,7 +56,9 @@ class TodoItem extends Component<ITodoItemProps, ITodoItemState> {
             isDone: props.item.isDone,
             isPrivate: props.item.isPrivate,
             date: props.item.date,
-            isEdit: false
+            isEdit: false,
+            comment: "Todo refreshed",
+            open: false,
         };
     }
 
@@ -60,20 +71,6 @@ class TodoItem extends Component<ITodoItemProps, ITodoItemState> {
     private handleChange = (event: any) => {
         const {value} = event.target;
         this.setState({name: value})
-    };
-
-    private handleDone = (event: any) => {
-        const {checked} = event.target;
-        this.setState({isDone: checked})
-    };
-
-    private handlePrivate = (event: any) => {
-        const {checked} = event.target;
-        this.setState({isPrivate: checked})
-    };
-
-    private handleEdit = () => {
-        this.setState({isEdit: true})
     };
 
     render() {
@@ -132,18 +129,58 @@ class TodoItem extends Component<ITodoItemProps, ITodoItemState> {
                         {
                             isEdit ? (
                                     <>
-                                        <Button onClick={this.handleSave}><SaveIcon>Save</SaveIcon></Button>
-                                        <Button onClick={this.handleRefresh}><RefreshIcon>Refresh</RefreshIcon></Button>
-                                        <Button onClick={this.handleDelete}><DeleteIcon>Delete item</DeleteIcon></Button>
-                                        <Button onClick={this.handleCancel}><CancelIcon>Delete
+                                        <Button variant="outlined" color="primary"
+                                                onClick={this.handleSave}><SaveIcon>Save</SaveIcon></Button>
+                                        <Button variant="outlined" color="primary"
+                                                onClick={this.handleRefresh}><RefreshIcon>Refresh</RefreshIcon></Button>
+                                        <Button variant="outlined" color="primary"
+                                                onClick={this.handleDelete}><DeleteIcon>Delete
+                                            item</DeleteIcon></Button>
+                                        <Button variant="outlined" color="primary"
+                                                onClick={this.handleCancel}><CancelIcon>Delete
                                             item</CancelIcon></Button>
                                     </>
                                 )
                                 :
                                 (
                                     <>
-                                    <Button onClick={this.handleEdit}><EditIcon>Edit</EditIcon></Button>
-                                        <Button><HistoryIcon>Delete item</HistoryIcon></Button>
+                                        <Button variant="outlined" color="primary"
+                                                onClick={this.handleEdit}><EditIcon>Edit</EditIcon></Button>
+                                        <Button variant="outlined"
+                                                color="primary"><HistoryIcon>History</HistoryIcon></Button>
+                                        <div>
+                                            <Button variant="outlined" color="primary" onClick={this.handleClickOpen}>
+                                                <CommentIcon>
+                                                    Comment for history
+                                                </CommentIcon>
+                                            </Button>
+                                            <Dialog open={this.state.open} onClose={this.handleClose}
+                                                    aria-labelledby="form-dialog-title">
+                                                <DialogTitle id="form-dialog-title">Comment</DialogTitle>
+                                                <DialogContent>
+                                                    <DialogContentText>
+                                                        Enter the comment then view in history
+                                                    </DialogContentText>
+                                                    <TextField
+                                                        autoFocus
+                                                        margin="dense"
+                                                        id="name"
+                                                        type="text"
+                                                        value={this.state.comment}
+                                                        onChange={this.handleChangeComment}
+                                                        fullWidth
+                                                    />
+                                                </DialogContent>
+                                                <DialogActions>
+                                                    <Button onClick={this.handleClose} color="primary">
+                                                        Cancel
+                                                    </Button>
+                                                    <Button onClick={this.handleClose} color="primary">
+                                                        Enter
+                                                    </Button>
+                                                </DialogActions>
+                                            </Dialog>
+                                        </div>
                                     </>
                                 )
                         }
@@ -152,6 +189,33 @@ class TodoItem extends Component<ITodoItemProps, ITodoItemState> {
             </Box>
         );
     }
+
+    private handleDone = (event: any) => {
+        const {checked} = event.target;
+        this.setState({isDone: checked})
+    };
+
+    private handlePrivate = (event: any) => {
+        const {checked} = event.target;
+        this.setState({isPrivate: checked})
+    };
+
+    private handleEdit = () => {
+        this.setState({isEdit: true})
+    };
+
+    private handleChangeComment = (event: any) => {
+        const {value} = event.target;
+        this.setState({comment: value})
+    };
+
+    private handleClickOpen = () => {
+        this.setState({open: true})
+    };
+
+    private handleClose = () => {
+        this.setState({open: false})
+    };
 
     private handleDelete = () => {
         const {id}: ITodoItemState = this.state;
@@ -176,8 +240,8 @@ class TodoItem extends Component<ITodoItemProps, ITodoItemState> {
     };
 
     private handleRefresh = () => {
-        const {uid, id, name, isDone, isPrivate}: ITodoItemState = this.state;
-        this.props.handleRefresh({uid, id, name, isDone, isPrivate});
+        const {uid, id, name, isDone, isPrivate, comment}: ITodoItemState = this.state;
+        this.props.handleRefresh({uid, id, name, isDone, isPrivate, comment});
         this.setState({isEdit: false})
     };
 }

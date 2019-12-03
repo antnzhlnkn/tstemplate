@@ -3,7 +3,6 @@ import {connect} from 'react-redux'
 import {compose} from 'redux'
 import {firestoreConnect} from 'react-redux-firebase'
 import TodoItem from "./TodoItem";
-import History from "../containers/History"
 
 interface ITodoItemState {
     uid: string;
@@ -13,6 +12,7 @@ interface ITodoItemState {
     isDone: boolean;
     isPrivate: boolean;
     date: any;
+    comment: any;
 }
 
 interface IProps {
@@ -59,19 +59,19 @@ class TodoList extends Component<IProps> {
             );
     };
 
-    private addHistory(id: ITodoItemState) {
+    private addHistory(id: ITodoItemState, comment: ITodoItemState) {
         this.props.firestore.add(
             {collection: 'history'},
             {
                 uid: this.props.uid,
                 todoId: id,
-                comment: "test",
+                comment: comment,
                 date: new Date()
             }
         )
     }
 
-    private handleRefresh = ({uid, id, name, isDone, isPrivate}: ITodoItemState) => {
+    private handleRefresh = ({uid, id, name, isDone, isPrivate, comment}: ITodoItemState) => {
         const {collection}: any = this.props.firestore;
         collection('todos')
             .doc(id)
@@ -84,7 +84,7 @@ class TodoList extends Component<IProps> {
                     date: new Date()
                 }
             );
-        this.addHistory(id)
+        this.addHistory(id, comment)
     };
 
     private handleDelete = ({id}: ITodoItemState) => {
