@@ -29,7 +29,7 @@ interface Styles {
     backgroundColor: any
 }
 
-class History extends Component<IProps, any> {
+class HistoryItem extends Component<IProps, any> {
     constructor(props: IProps) {
         super(props);
         this.state = {
@@ -97,16 +97,16 @@ export default compose<any>(
     firestoreConnect((props: any) => {
             const {uid}: IProps = props;
             const {todoId}: IProps = props;
-            console.log(todoId)
+        console.log(todoId);
             if (!uid) return [];
             return [
                 {
                     collection: 'history',
                     where: [
-                        ['todoId', '==', todoId]
+                        ['uid', '==', uid]
                     ]
                 }
             ]
         }
     )
-)(History)
+)(HistoryItem)

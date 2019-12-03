@@ -3,6 +3,8 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import SaveIcon from '@material-ui/icons/Save'
 import EditIcon from '@material-ui/icons/Edit'
 import RefreshIcon from '@material-ui/icons/Refresh';
+import HistoryIcon from '@material-ui/icons/History';
+import CancelIcon from '@material-ui/icons/Cancel';
 import Card from '@material-ui/core/Card';
 import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
@@ -133,12 +135,16 @@ class TodoItem extends Component<ITodoItemProps, ITodoItemState> {
                                         <Button onClick={this.handleSave}><SaveIcon>Save</SaveIcon></Button>
                                         <Button onClick={this.handleRefresh}><RefreshIcon>Refresh</RefreshIcon></Button>
                                         <Button onClick={this.handleDelete}><DeleteIcon>Delete item</DeleteIcon></Button>
+                                        <Button onClick={this.handleCancel}><CancelIcon>Delete
+                                            item</CancelIcon></Button>
                                     </>
                                 )
                                 :
                                 (
-
+                                    <>
                                     <Button onClick={this.handleEdit}><EditIcon>Edit</EditIcon></Button>
+                                        <Button><HistoryIcon>Delete item</HistoryIcon></Button>
+                                    </>
                                 )
                         }
                     </CardActions>
@@ -150,6 +156,17 @@ class TodoItem extends Component<ITodoItemProps, ITodoItemState> {
     private handleDelete = () => {
         const {id}: ITodoItemState = this.state;
         this.props.handleDelete({id});
+    };
+    private handleCancel = () => {
+        this.setState({
+            uid: this.props.item.uid,
+            id: this.props.item.id,
+            name: this.props.item.name,
+            isDone: this.props.item.isDone,
+            isPrivate: this.props.item.isPrivate,
+            date: this.props.item.date,
+            isEdit: false
+        })
     };
 
     private handleSave = () => {

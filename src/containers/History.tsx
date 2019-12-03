@@ -1,0 +1,103 @@
+import React, {Component} from 'react'
+import {connect} from 'react-redux'
+import {compose} from 'redux'
+import {firestoreConnect} from 'react-redux-firebase'
+import moment from 'moment';
+import Checkbox from '@material-ui/core/Checkbox';
+import Card from '@material-ui/core/Card';
+import {Box} from "@material-ui/core";
+import {Container} from "../components/container";
+
+interface IProps {
+    uid?: string,
+    todos?: object,
+    selectedTodo?: object,
+    selectTodo?: any,
+    completedTodo?: object,
+    completTodo?: any,
+    firestore?: object
+}
+
+interface RenderTodoParams {
+    todo: any;
+}
+
+interface Styles {
+    padding: any,
+    cursor: any,
+    backgroundColor: any
+}
+
+class History extends Component<IProps, any> {
+
+    renderTodo({todo}: RenderTodoParams) {
+        const styles: Styles = {
+            padding: '1rem',
+            cursor: 'pointer',
+            backgroundColor: '#ffffff'
+        };
+        if (todo === this.props.selectedTodo) {
+            styles.backgroundColor = '#988afe'
+        }
+        return (
+            <Box mb={1}>
+                <Card
+                    key={todo.name}
+                    style={styles}
+                    onClick={() => this.props.selectTodo(todo)}>
+                    {todo.name}
+                    <Checkbox
+                        checked={todo.isDone}
+                        disabled
+                    />
+                    <div>
+                        {todo.date ?
+                            <span>Hours: {((moment.duration(moment().unix() * 1000).asHours()) - moment.duration(todo.date.seconds * 1000).asHours()).toFixed(1)}  </span> : null}
+                        {todo.date ?
+                            <span>Days: {((moment.duration(moment().unix() * 1000).asDays()) - moment.duration(todo.date.seconds * 1000).asDays()).toFixed()} </span> : null}
+                    </div>
+                </Card>
+            </Box>
+        )
+    }
+
+    render() {
+        console.log(this.props);
+        return (
+            <Container>
+                <div>
+                    asd
+                </div>
+            </Container>
+        )
+    }
+}
+
+const mapStateToProps = (state: any) => {
+    return {
+        uid: state.firebase.auth.uid,
+        todos: state.firestore.ordered.todos ? state.firestore.ordered.todos : [],
+    }
+};
+
+const mapDispatchToProps = () => {
+
+};
+
+export default compose<any>(
+    connect(mapStateToProps, mapDispatchToProps),
+    firestoreConnect((props: any) => {
+            const {uid, id}: any = props;
+            console.log(id);
+            if (!uid) return [];
+            return [
+                {
+                    collection: 'todos',
+                    where: [
+                        ['uid', '==', uid]
+                    ]
+                }
+            ]
+        }
+    )
+)(History)
