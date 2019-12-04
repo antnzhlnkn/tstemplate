@@ -103,11 +103,11 @@ export default compose<any>(
             return [
                 {
                     collection: 'history',
-                    where: [
+                    where:
                         [
+                            ['uid', '==', uid],
                             ['todoId', '==', todoId]
                         ]
-                    ]
                 }
             ]
         }
