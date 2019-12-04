@@ -7,6 +7,7 @@ import Checkbox from '@material-ui/core/Checkbox';
 import Card from '@material-ui/core/Card';
 import {Box} from "@material-ui/core";
 import {Container} from "../components/container";
+import HistoryItem from "../components/historyItem";
 
 interface IProps {
     uid?: string,
@@ -15,7 +16,8 @@ interface IProps {
     selectTodo?: any,
     completedTodo?: object,
     completTodo?: any,
-    firestore?: object
+    firestore?: object;
+    match: any;
 }
 
 interface RenderTodoParams {
@@ -44,7 +46,7 @@ class History extends Component<IProps, any> {
                 <Card
                     key={todo.name}
                     style={styles}
-                    onClick={() => this.props.selectTodo(todo)}>
+                >
                     {todo.name}
                     <Checkbox
                         checked={todo.isDone}
@@ -62,11 +64,17 @@ class History extends Component<IProps, any> {
     }
 
     render() {
-        console.log(this.props);
+        const {todos}: any = this.props;
+        const todoItems = todos.map(
+            (item: any) => this.renderTodo({todo: item})
+        );
         return (
             <Container>
                 <div>
-                    asd
+                    Task:
+                    {todoItems}
+                    History:
+                    <HistoryItem todoId={this.props.match.params.todoId}/>
                 </div>
             </Container>
         )
@@ -87,15 +95,14 @@ const mapDispatchToProps = () => {
 export default compose<any>(
     connect(mapStateToProps, mapDispatchToProps),
     firestoreConnect((props: any) => {
-            const {uid, id}: any = props;
-            console.log(id);
+        const {uid}: any = props;
+        const {todoId}: any = props.match.params;
+        console.log(props.match.params.todoId);
             if (!uid) return [];
             return [
                 {
                     collection: 'todos',
-                    where: [
-                        ['uid', '==', uid]
-                    ]
+                    doc: todoId
                 }
             ]
         }

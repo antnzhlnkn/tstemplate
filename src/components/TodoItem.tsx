@@ -24,6 +24,9 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
+import store from "../redux/store/store";
+import History from "../containers/History";
+import {PrivateRoute} from "../router/private-router";
 
 
 interface ITodoItemProps {
@@ -147,7 +150,13 @@ class TodoItem extends Component<ITodoItemProps, ITodoItemState> {
                                         <Button variant="outlined" color="primary"
                                                 onClick={this.handleEdit}><EditIcon>Edit</EditIcon></Button>
                                         <Button variant="outlined"
-                                                color="primary"><HistoryIcon>History</HistoryIcon></Button>
+                                                color="primary">
+                                            <HistoryIcon>History</HistoryIcon>
+                                        </Button>
+                                        <div>
+                                            <PrivateRoute store={store} exact path="/history/:todoId"
+                                                          component={History}/>
+                                        </div>
                                         <div>
                                             <Button variant="outlined" color="primary" onClick={this.handleClickOpen}>
                                                 <CommentIcon>

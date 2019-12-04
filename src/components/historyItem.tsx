@@ -33,7 +33,7 @@ class HistoryItem extends Component<IProps, any> {
     constructor(props: IProps) {
         super(props);
         this.state = {
-            todoId: "WrzRH2DDbtjq7jPKIxBm"
+            todoId: "JZjQqb6kWPhpwpUqvxm5"
         };
     }
 
@@ -52,8 +52,9 @@ class HistoryItem extends Component<IProps, any> {
                     key={item.name}
                     style={styles}
                 >
-                    {item.comment}
+                    Comment: {item.comment}
                     <div>
+                        Time ago:
                         {item.date ?
                             <span>Hours: {((moment.duration(moment().unix() * 1000).asHours()) - moment.duration(item.date.seconds * 1000).asHours()).toFixed(1)}  </span> : null}
                         {item.date ?
@@ -103,7 +104,9 @@ export default compose<any>(
                 {
                     collection: 'history',
                     where: [
-                        ['uid', '==', uid]
+                        [
+                            ['todoId', '==', todoId]
+                        ]
                     ]
                 }
             ]

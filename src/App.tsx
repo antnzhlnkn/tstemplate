@@ -8,9 +8,10 @@ import AuthButton from "./components/AuthButton"
 import Home from "./containers/Home";
 import Profile from "./components/Profile"
 import OtherTodo from "./components/OtherTodo";
-import History from "./components/historyItem"
+import HistoryItem from "./components/historyItem"
 import {AppWrapper} from "./containers/App-wrapper";
 import {PrivateRoute} from "./router/private-router";
+import History from "./containers/History";
 
 class App extends Component <any, any> {
     render() {
@@ -24,7 +25,8 @@ class App extends Component <any, any> {
                             <PrivateRoute store={store} exact path="/" component={Home}/>
                             <PrivateRoute store={store} exact path="/other" component={OtherTodo}/>
                             <PrivateRoute store={store} exact path="/profile" component={Profile}/>
-                            <PrivateRoute store={store} exact path="/history" component={History}/>
+                            <PrivateRoute store={store} exact path="/history" component={HistoryItem}/>
+                            <PrivateRoute store={store} exact path="/history/:todoId" component={History}/>
                         </AppWrapper>
                     </Switch>
                 </Router>

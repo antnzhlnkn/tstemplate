@@ -3,6 +3,7 @@ import {connect} from 'react-redux'
 import {compose} from 'redux'
 import {firestoreConnect} from 'react-redux-firebase'
 import TodoItem from "./TodoItem";
+import {Container} from "./container";
 
 interface ITodoItemState {
     uid: string;
@@ -32,7 +33,7 @@ class TodoList extends Component<IProps> {
         const {todos}: any = this.props;
 
         return (
-            <div>
+            <Container>
                 <div>
                     {
                         todos.map((item: any) => <TodoItem key={item.id} item={item} handleSave={this.handleSave}
@@ -40,7 +41,7 @@ class TodoList extends Component<IProps> {
                                                            handleDelete={this.handleDelete}/>)
                     }
                 </div>
-            </div>
+            </Container>
         )
     }
 
