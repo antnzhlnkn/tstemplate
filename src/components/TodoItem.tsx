@@ -27,6 +27,7 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import store from "../redux/store/store";
 import History from "../containers/History";
 import {PrivateRoute} from "../router/private-router";
+import {Link} from "react-router-dom";
 
 
 interface ITodoItemProps {
@@ -153,6 +154,7 @@ class TodoItem extends Component<ITodoItemProps, ITodoItemState> {
                                                 color="primary">
                                             <HistoryIcon>History</HistoryIcon>
                                         </Button>
+                                        <Link to={`/history/${this.state.id}`}>{this.state.id}</Link>
                                         <div>
                                             <PrivateRoute store={store} exact path="/history/:todoId"
                                                           component={History}/>
