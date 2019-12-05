@@ -7,6 +7,7 @@ import Checkbox from '@material-ui/core/Checkbox';
 import Card from '@material-ui/core/Card';
 import {Box} from "@material-ui/core";
 import {Container} from "./container";
+import Typography from '@material-ui/core/Typography'
 
 interface IProps {
     uid?: string,
@@ -45,17 +46,19 @@ class OtherTodo extends Component<IProps, any> {
                     key={todo.name}
                     style={styles}
                     onClick={() => this.props.selectTodo(todo)}>
-                    {todo.name}
+                    <Typography>{todo.name}</Typography>
+                    <Typography>Done:
                     <Checkbox
                         checked={todo.isDone}
                         disabled
                     />
-                    <div>
+                    </Typography>
+                    <Typography>
                         {todo.date ?
                             <span>Hours: {((moment.duration(moment().unix() * 1000).asHours()) - moment.duration(todo.date.seconds * 1000).asHours()).toFixed(1)}  </span> : null}
                         {todo.date ?
                             <span>Days: {((moment.duration(moment().unix() * 1000).asDays()) - moment.duration(todo.date.seconds * 1000).asDays()).toFixed()} </span> : null}
-                    </div>
+                    </Typography>
                 </Card>
             </Box>
         )

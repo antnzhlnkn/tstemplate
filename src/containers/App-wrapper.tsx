@@ -37,7 +37,6 @@ export class AppWrapper extends React.Component<IAppWrapperProps, IAppWrapperSta
             links.push({title: "Home", to: "/"});
             links.push({title: "Other", to: "/other"});
             links.push({title: "Profile", to: "/profile"});
-            links.push({title: "History ", to: "/history"});
         } else {
             links.push({title: "Login", to: "/auth/login"});
         }

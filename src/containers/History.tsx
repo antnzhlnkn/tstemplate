@@ -2,83 +2,97 @@ import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {compose} from 'redux'
 import {firestoreConnect} from 'react-redux-firebase'
-import moment from 'moment';
-import Checkbox from '@material-ui/core/Checkbox';
-import Card from '@material-ui/core/Card';
-import {Box} from "@material-ui/core";
 import {Container} from "../components/container";
 import HistoryItem from "../components/historyItem";
+import TodoItem from "../components/TodoItem"
 
 interface IProps {
-    uid?: string,
-    todos?: object,
-    selectedTodo?: object,
-    selectTodo?: any,
-    completedTodo?: object,
-    completTodo?: any,
-    firestore?: object;
+    uid?: string;
+    todos?: object;
+    firestore?: any;
     match: any;
 }
 
-interface RenderTodoParams {
-    todo: any;
-}
-
-interface Styles {
-    padding: any,
-    cursor: any,
-    backgroundColor: any
+interface ITodoItemState {
+    uid: string;
+    id: any;
+    isEdit: boolean;
+    name: string;
+    isDone: boolean;
+    isPrivate: boolean;
+    date: any;
+    comment: any;
 }
 
 class History extends Component<IProps, any> {
 
-    renderTodo({todo}: RenderTodoParams) {
-        const styles: Styles = {
-            padding: '1rem',
-            cursor: 'pointer',
-            backgroundColor: '#ffffff'
-        };
-        if (todo === this.props.selectedTodo) {
-            styles.backgroundColor = '#988afe'
-        }
-        return (
-            <Box mb={1}>
-                <Card
-                    key={todo.name}
-                    style={styles}
-                >
-                    {todo.name}
-                    <Checkbox
-                        checked={todo.isDone}
-                        disabled
-                    />
-                    <div>
-                        {todo.date ?
-                            <span>Hours: {((moment.duration(moment().unix() * 1000).asHours()) - moment.duration(todo.date.seconds * 1000).asHours()).toFixed(1)}  </span> : null}
-                        {todo.date ?
-                            <span>Days: {((moment.duration(moment().unix() * 1000).asDays()) - moment.duration(todo.date.seconds * 1000).asDays()).toFixed()} </span> : null}
-                    </div>
-                </Card>
-            </Box>
-        )
-    }
-
     render() {
         const {todos}: any = this.props;
-        const todoItems = todos.map(
-            (item: any) => this.renderTodo({todo: item})
-        );
         return (
             <Container>
                 <div>
                     Task:
-                    {todoItems}
+                    {
+                        todos.map((item: any) => <TodoItem key={item.id} item={item} handleSave={this.handleSave}
+                                                           handleRefresh={this.handleRefresh}
+                                                           handleDelete={this.handleDelete}/>)
+                    }
                     History:
                     <HistoryItem todoId={this.props.match.params.todoId}/>
                 </div>
             </Container>
         )
     }
+
+    private handleSave = ({uid, date, id, name, isDone, isPrivate}: ITodoItemState) => {
+        const {collection}: any = this.props.firestore;
+        collection('todos')
+            .doc(id)
+            .set(
+                {
+                    name: name,
+                    isDone: isDone,
+                    uid: uid,
+                    isPrivate: isPrivate,
+                    date: date
+                }
+            );
+    };
+
+    private addHistory(id: ITodoItemState, comment: ITodoItemState) {
+        this.props.firestore.add(
+            {collection: 'history'},
+            {
+                uid: this.props.uid,
+                todoId: id,
+                comment: comment,
+                date: new Date()
+            }
+        )
+    }
+
+    private handleRefresh = ({uid, id, name, isDone, isPrivate, comment}: ITodoItemState) => {
+        const {collection}: any = this.props.firestore;
+        collection('todos')
+            .doc(id)
+            .set(
+                {
+                    name: name,
+                    isDone: isDone,
+                    uid: uid,
+                    isPrivate: isPrivate,
+                    date: new Date()
+                }
+            );
+        this.addHistory(id, comment)
+    };
+
+    private handleDelete = ({id}: ITodoItemState) => {
+        const {collection}: any = this.props.firestore;
+        collection('todos')
+            .doc(id)
+            .delete()
+    };
 }
 
 const mapStateToProps = (state: any) => {
@@ -97,7 +111,6 @@ export default compose<any>(
     firestoreConnect((props: any) => {
         const {uid}: any = props;
         const {todoId}: any = props.match.params;
-        console.log(props.match.params.todoId);
             if (!uid) return [];
             return [
                 {

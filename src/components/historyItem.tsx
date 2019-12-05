@@ -6,6 +6,8 @@ import moment from 'moment';
 import Card from '@material-ui/core/Card';
 import {Box} from "@material-ui/core";
 import {Container} from "./container";
+import Typography from '@material-ui/core/Typography'
+
 
 interface IProps {
     uid?: string,
@@ -52,14 +54,16 @@ class HistoryItem extends Component<IProps, any> {
                     key={item.name}
                     style={styles}
                 >
-                    Comment: {item.comment}
-                    <div>
+                    <Typography>Comment: {item.comment}</Typography>
+                    <Typography>
                         Time ago:
                         {item.date ?
-                            <span>Hours: {((moment.duration(moment().unix() * 1000).asHours()) - moment.duration(item.date.seconds * 1000).asHours()).toFixed(1)}  </span> : null}
+                            <span> Hours: {((moment.duration(moment().unix() * 1000).asHours()) - moment.duration(item.date.seconds * 1000).asHours()).toFixed(1)}  </span> : null}
                         {item.date ?
                             <span>Days: {((moment.duration(moment().unix() * 1000).asDays()) - moment.duration(item.date.seconds * 1000).asDays()).toFixed()} </span> : null}
-                    </div>
+                    </Typography>
+                    <Typography>Updated
+                        at: {moment(item.date.seconds * 1000).format("dddd, MMMM Do YYYY, h:mm:ss a")}</Typography>
                 </Card>
             </Box>
         )
@@ -98,7 +102,6 @@ export default compose<any>(
     firestoreConnect((props: any) => {
             const {uid}: IProps = props;
             const {todoId}: IProps = props;
-        console.log(todoId);
             if (!uid) return [];
             return [
                 {
@@ -107,7 +110,8 @@ export default compose<any>(
                         [
                             ['uid', '==', uid],
                             ['todoId', '==', todoId]
-                        ]
+                        ],
+                    orderBy: ['date', 'desc']
                 }
             ]
         }
