@@ -24,6 +24,7 @@ export class AuthButton extends Component<IProps, any> {
         if (isEmpty(this.props.auth)) {
             return (
                 <div>
+                    <div>4len</div>
                     <Button variant="outlined"
                             onClick={
                                 () => this.props.firebase.login({provider: 'google', type: 'popup'})
@@ -39,7 +40,6 @@ export class AuthButton extends Component<IProps, any> {
                         style={{width: "100%"}}
                         onClick={() => this.props.firebase.logout()}
                 > Logout</Button>
-                {console.log(this.state)}
             </div>
         )
     }
