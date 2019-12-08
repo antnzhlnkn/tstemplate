@@ -2,6 +2,7 @@ import * as React from "react";
 import {Container} from "./container";
 import {Link} from "react-router-dom";
 import {Button} from "@material-ui/core";
+import Typography from '@material-ui/core/Typography';
 
 interface INavLink {
     title: string;
@@ -17,17 +18,18 @@ interface INavProps {
 export const Nav: React.FC<INavProps> = ({links}) => (
     <nav className="navigation">
         <Container>
-            <Link className="navigation-title" to="/"><h1 className="title">Shit counter</h1></Link>
+            <Link className="navigation-title" to="/"><Typography variant={"h5"}>Shit counter</Typography></Link>
             {
                 !!links && (
                     <div className="float-right">
                         <div className="navigation-links">
                             {
                                 links.map(navLink => (
-                                    <Button key={navLink.title + navLink.to} className="navigation-link--wrapper">
+                                    <Button variant={'outlined'} key={navLink.title + navLink.to}>
                                         {
                                             navLink.to ?
-                                                <Link className="navigation-link" to={navLink.to}><p>{navLink.title}</p>
+                                                <Link className="navigation-link"
+                                                      to={navLink.to}><Typography>{navLink.title}</Typography>
                                                 </Link>
                                                 :
                                                 <a
@@ -38,7 +40,7 @@ export const Nav: React.FC<INavProps> = ({links}) => (
                                                         navLink.onClick!!();
                                                     }}
                                                 >
-                                                    <p>{navLink.title}</p>
+                                                    <Typography>{navLink.title}</Typography>
                                                 </a>
                                         }
                                     </Button>
