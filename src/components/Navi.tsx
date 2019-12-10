@@ -4,6 +4,10 @@ import {compose} from 'redux'
 import {firebaseConnect} from 'react-redux-firebase'
 import withStyles from '@material-ui/core/styles/withStyles';
 import {Container} from "./container"
+import {AppBar, IconButton, Menu, MenuItem, Toolbar, Typography} from "@material-ui/core";
+import Button from '@material-ui/core/Button';
+import MenuIcon from '@material-ui/icons/Menu';
+import {Link} from "react-router-dom";
 
 const styles = (theme: any) => ({
     container: {
@@ -27,7 +31,20 @@ const styles = (theme: any) => ({
         fontSize: 70,
         color: theme.palette.primary.main,
     },
+    root: {
+        display: 'flex',
+    },
+    menuButton: {
+        marginRight: theme.spacing(2),
+    },
+    title: {
+        flexGrow: 1,
+    },
 });
+
+interface IState {
+    open: boolean;
+}
 
 interface INavLink {
     title: string;
@@ -44,21 +61,56 @@ interface INavProps {
     classes?: any;
 }
 
-export class Navi extends Component<INavProps> {
+export class Navi extends Component<INavProps, IState> {
+    constructor(props: INavProps) {
+        super(props);
+        this.state = {
+            open: false,
+        };
+    }
 
     render() {
         const {classes} = this.props;
 
-        console.log(this.props.links);
+        console.log(this.props);
         return (
             <Container>
-                <div className={classes.container}>
-                    ads
+                <div className={classes.root}>
+                    <Menu open={this.state.open}>
+                        <MenuItem component={Link} to={`/`} onClick={this.MenuClose}>
+                            Home
+                        </MenuItem>
+                        <MenuItem component={Link} to={`/other`} onClick={this.MenuClose}>
+                            Other
+                        </MenuItem>
+                        <MenuItem component={Link} to={`/profile`} onClick={this.MenuClose}>
+                            Profile
+                        </MenuItem>
+                    </Menu>
+                    <AppBar position="static">
+                        <Toolbar>
+                            <IconButton onClick={this.MenuOpen} edge="start" className={classes.menuButton}
+                                        color="inherit" aria-label="menu">
+                                <MenuIcon/>
+                            </IconButton>
+                            <Typography variant="h6" className={classes.title}>
+                                Shit Counter
+                            </Typography>
+                            <Button color="inherit">Login</Button>
+                        </Toolbar>
+                    </AppBar>
                 </div>
-
             </Container>
         )
     }
+
+    private MenuOpen = (event: any) => {
+        this.setState({open: true});
+    };
+
+    private MenuClose = (event: any) => {
+        this.setState({open: false});
+    };
 }
 
 const mapStateToProps = (state: any) => ({

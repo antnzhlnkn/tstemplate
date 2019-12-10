@@ -5,6 +5,7 @@ import {connect} from "react-redux";
 import {Nav} from "../components/nav";
 import {isLoaded} from "react-redux-firebase";
 import CircularProgress from "@material-ui/core/CircularProgress";
+import Navi from "../components/Navi";
 
 
 const mapStateToProps = (state: any) => ({
@@ -45,7 +46,8 @@ export class AppWrapper extends React.Component<IAppWrapperProps, IAppWrapperSta
             <main className="wrapper">
                 <Nav
                     links={links}/>
-
+                <Navi
+                    links={links}/>
                 {this.props.children}
 
             </main>
