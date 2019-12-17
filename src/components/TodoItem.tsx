@@ -89,6 +89,7 @@ class TodoItem extends Component<ITodoItemProps, ITodoItemState> {
                                         value={this.state.name}
                                         name="name"
                                         onChange={this.handleChange}
+                                        style={{width: '100%'}}
                                     />
                                 ) :
                                 (
