@@ -6,7 +6,7 @@ import {BrowserRouter as Router, Route, Switch} from 'react-router-dom'
 import store from "./redux/store/store"
 import AuthButton from "./components/AuthButton"
 import Home from "./containers/Home";
-import Profile from "./components/Profile"
+import Profile from "./containers/Profile"
 import OtherTodo from "./components/OtherTodo";
 import HistoryItem from "./components/historyItem"
 import {AppWrapper} from "./containers/App-wrapper";

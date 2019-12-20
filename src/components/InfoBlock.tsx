@@ -9,7 +9,8 @@ interface InfoBlockProps {
 }
 
 export const InfoBlock: React.FC<InfoBlockProps> = ({title, value, size, isImage}) => (
-    <Box display="flex" flexDirection="row" p={1} m={1} bgcolor="background.paper">
+    <Box display="flex" flexDirection="row" p={1} m={1} bgcolor="background.paper" border={1} borderRadius={16}
+         borderColor="primary.main">
         <Box p={1} m={1}>
             {title}
         </Box>

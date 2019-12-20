@@ -12,27 +12,6 @@ import ClickAwayListener from '@material-ui/core/ClickAwayListener';
 
 
 const styles = (theme: any) => ({
-    container: {
-        height: 226,
-        display: 'flex',
-        cursor: 'pointer',
-        position: 'relative' as 'relative',
-    },
-    text: {
-        position: 'absolute' as 'absolute',
-        top: 20,
-        left: 20,
-        right: 20,
-        color: theme.palette.primary.light,
-        fontSize: 18,
-        lineHeight: '20px',
-        textAlign: 'center' as 'center',
-    },
-    icon: {
-        margin: 'auto',
-        fontSize: 70,
-        color: theme.palette.primary.main,
-    },
     root: {
         display: 'flex',
     },

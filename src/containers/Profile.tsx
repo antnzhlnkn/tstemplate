@@ -4,8 +4,8 @@ import {compose} from 'redux'
 import {firebaseConnect, isLoaded} from 'react-redux-firebase'
 import CircularProgress from '@material-ui/core/CircularProgress';
 import moment from 'moment';
-import {Container} from "./container";
-import {InfoBlock} from "./InfoBlock";
+import {Container} from "../components/container";
+import {InfoBlock} from "../components/InfoBlock";
 
 interface IProps {
     auth?: any,
