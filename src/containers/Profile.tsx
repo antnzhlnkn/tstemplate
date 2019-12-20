@@ -25,7 +25,7 @@ export class Profile extends Component<IProps, any> {
         }
         return (
             <Container>
-                <div style={{width: '50%'}}>
+                <div style={{width: '100%'}}>
                     <InfoBlock title={`Name:`} value={this.props.auth.displayName}/>
                     <InfoBlock title={`Email:`} value={this.props.auth.email}/>
                     <InfoBlock title={`Registration date:`}
