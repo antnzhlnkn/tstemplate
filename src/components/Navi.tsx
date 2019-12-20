@@ -15,6 +15,9 @@ const styles = (theme: any) => ({
     root: {
         display: 'flex',
     },
+    bar: {
+        marginBottom: '10px',
+    },
     menuButton: {
         marginRight: theme.spacing(2),
     },
@@ -95,7 +98,7 @@ export class Navi extends Component<INavProps, IState> {
                                 )
                             }
                         </Menu>
-                        <AppBar position="static">
+                        <AppBar position="static" className={classes.bar}>
                             <Toolbar>
                                 <IconButton onClick={this.MenuOpen} edge="start" className={classes.menuButton}
                                             color="inherit" aria-label="menu">

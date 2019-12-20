@@ -5,6 +5,7 @@ import {firestoreConnect} from 'react-redux-firebase'
 import {Container} from "../components/container";
 import HistoryItem from "../components/historyItem";
 import TodoItem from "../components/TodoItem"
+import Typography from "@material-ui/core/Typography";
 
 interface IProps {
     uid?: string;
@@ -30,16 +31,20 @@ class History extends Component<IProps, any> {
         const {todos}: any = this.props;
         return (
             <Container>
-                <div>
-                    Task:
+                <>
+                    <Typography variant="h6" component="h3">
+                        Task:
+                    </Typography>
                     {
                         todos.map((item: any) => <TodoItem key={item.id} item={item} handleSave={this.handleSave}
                                                            handleRefresh={this.handleRefresh}
                                                            handleDelete={this.handleDelete}/>)
                     }
-                    History:
+                    <Typography variant="h6" component="h3">
+                        History:
+                    </Typography>
                     <HistoryItem todoId={this.props.match.params.todoId}/>
-                </div>
+                </>
             </Container>
         )
     }
