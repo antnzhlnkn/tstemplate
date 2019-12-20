@@ -3,7 +3,7 @@ import {connect} from 'react-redux'
 import {compose} from 'redux'
 import {firestoreConnect} from 'react-redux-firebase'
 import {Container} from "../components/container";
-import HistoryItem from "../components/historyItem";
+import HistoryItem from "../components/HistoryItem";
 import TodoItem from "../components/TodoItem"
 import Typography from "@material-ui/core/Typography";
 

@@ -8,7 +8,7 @@ import AuthButton from "./components/AuthButton"
 import Home from "./containers/Home";
 import Profile from "./containers/Profile"
 import OtherTodo from "./components/OtherTodo";
-import HistoryItem from "./components/historyItem"
+import HistoryItem from "./components/HistoryItem"
 import {AppWrapper} from "./containers/App-wrapper";
 import {PrivateRoute} from "./router/private-router";
 import History from "./containers/History";
