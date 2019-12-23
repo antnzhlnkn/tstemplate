@@ -82,7 +82,7 @@ class TodoItem extends Component<ITodoItemProps, ITodoItemState> {
                 <Card>
                     <CardContent>
                         {
-                            this.state.isEdit ? (
+                            isEdit ? (
                                     <Input
                                         type="text"
                                         placeholder="Add new task"
@@ -253,10 +253,17 @@ class TodoItem extends Component<ITodoItemProps, ITodoItemState> {
     };
 }
 
-const mapStateToProps = () => {
+const mapStateToProps = (state: any) => {
+    return {
+        privateTodo: state.todos.isPrivate
+    }
 };
 
-const mapDispatchToProps = () => {
+const mapDispatchToProps = (dispatch: any) => {
+    return {
+        selectTodo: (todo: any) => dispatch({type: 'selectTodo', todo}),
+        privateTodo: (isPrivate: boolean) => dispatch({type: 'privateTodo', isPrivate}),
+    }
 };
 
 export default compose<any>(
