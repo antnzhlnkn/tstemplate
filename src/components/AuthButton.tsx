@@ -6,9 +6,9 @@ import Button from '@material-ui/core/Button';
 import CircularProgress from '@material-ui/core/CircularProgress';
 
 interface IProps {
-    auth?: object,
-    firestore?: any,
-    firebase?: any
+    auth?: object;
+    firestore?: any;
+    firebase?: any;
 }
 
 export class AuthButton extends Component<IProps, any> {

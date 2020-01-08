@@ -14,17 +14,17 @@ import Checkbox from '@material-ui/core/Checkbox';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 
 interface IProps {
-    uid?: string,
-    isDone?: boolean,
-    date?: any,
-    firestore?: any
+    uid?: string;
+    isDone?: boolean;
+    date?: any;
+    firestore?: any;
 }
 
 interface IState {
-    todo: string,
-    isPrivate: boolean,
-    isDone: boolean,
-    date?: any
+    todo: string;
+    isPrivate: boolean;
+    isDone: boolean;
+    date?: any;
 }
 
 class AddTodo extends Component<IProps, IState> {

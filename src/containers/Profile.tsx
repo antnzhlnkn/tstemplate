@@ -8,9 +8,9 @@ import {Container} from "../components/container";
 import {InfoBlock} from "../components/InfoBlock";
 
 interface IProps {
-    auth?: any,
-    firestore?: any,
-    firebase?: any,
+    auth?: any;
+    firestore?: any;
+    firebase?: any;
 }
 
 export class Profile extends Component<IProps, any> {

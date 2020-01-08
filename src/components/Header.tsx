@@ -11,9 +11,9 @@ import Profile from "../containers/Profile";
 import OtherTodo from "./OtherTodo"
 
 interface IProps {
-    auth?: any,
-    firestore?: any,
-    firebase?: any,
+    auth?: any;
+    firestore?: any;
+    firebase?: any;
 }
 
 export class Header extends Component<IProps, any> {

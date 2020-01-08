@@ -10,15 +10,15 @@ import Typography from '@material-ui/core/Typography'
 
 
 interface IProps {
-    uid?: string,
-    todoId?: string,
-    todos?: object,
-    history?: object,
-    selectedTodo?: object,
-    selectTodo?: any,
-    completedTodo?: object,
-    completTodo?: any,
-    firestore?: object
+    uid?: string;
+    todoId?: string;
+    todos?: object;
+    history?: object;
+    selectedTodo?: object;
+    selectTodo?: any;
+    completedTodo?: object;
+    completTodo?: any;
+    firestore?: object;
 }
 
 interface RenderTodoParams {
@@ -26,9 +26,9 @@ interface RenderTodoParams {
 }
 
 interface Styles {
-    padding: any,
-    cursor: any,
-    backgroundColor: any
+    padding: any;
+    cursor: any;
+    backgroundColor: any;
 }
 
 class HistoryItem extends Component<IProps, any> {

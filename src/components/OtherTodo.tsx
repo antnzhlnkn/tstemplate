@@ -10,13 +10,13 @@ import {Container} from "./container";
 import Typography from '@material-ui/core/Typography'
 
 interface IProps {
-    uid?: string,
-    todos?: object,
-    selectedTodo?: object,
-    selectTodo?: any,
-    completedTodo?: object,
-    completTodo?: any,
-    firestore?: object
+    uid?: string;
+    todos?: object;
+    selectedTodo?: object;
+    selectTodo?: any;
+    completedTodo?: object;
+    completTodo?: any;
+    firestore?: object;
 }
 
 interface RenderTodoParams {
@@ -24,9 +24,9 @@ interface RenderTodoParams {
 }
 
 interface Styles {
-    padding: any,
-    cursor: any,
-    backgroundColor: any
+    padding: any;
+    cursor: any;
+    backgroundColor: any;
 }
 
 class OtherTodo extends Component<IProps, any> {

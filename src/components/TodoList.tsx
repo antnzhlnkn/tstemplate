@@ -17,15 +17,15 @@ interface ITodoItemState {
 }
 
 interface IProps {
-    uid?: string,
-    todos?: object,
-    selectedTodo?: object,
-    selectTodo?: any,
-    completedTodo?: object,
-    completTodo?: any,
-    ptivatedTodo?: object,
-    privateTodo?: any,
-    firestore?: any
+    uid?: string;
+    todos?: object;
+    selectedTodo?: object;
+    selectTodo?: any;
+    completedTodo?: object;
+    completTodo?: any;
+    ptivatedTodo?: object;
+    privateTodo?: any;
+    firestore?: any;
 }
 
 class TodoList extends Component<IProps> {

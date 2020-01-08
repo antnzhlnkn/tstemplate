@@ -17,12 +17,6 @@ class Home extends Component<any, any> {
     }
 }
 
-const mapStateToProps = () => {
-};
-
-const mapDispatchToProps = () => {
-};
-
 export default compose<any>(
-    connect(mapStateToProps, mapDispatchToProps)
+    connect()
 )(Home)

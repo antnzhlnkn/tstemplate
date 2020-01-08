@@ -42,9 +42,9 @@ interface INavLink {
 
 interface INavProps {
     links?: INavLink[];
-    auth?: any,
-    firestore?: any,
-    firebase?: any,
+    auth?: any;
+    firestore?: any;
+    firebase?: any;
     classes?: any;
 }
 
